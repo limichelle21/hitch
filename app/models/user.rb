@@ -6,18 +6,19 @@ class User < ActiveRecord::Base
 
 
 
-def calculate_ratings
-    # takes average of all ratings associated with a user
-end
-    
-def save_rating
-    # Save rating integer from email response to a user's recor
-end
+
+    def calculate_ratings
+        # takes average of all ratings associated with a user
+    end
+
+    def save_rating
+        # Save rating integer from email response to a user's recor
+    end
 
 
-def avatar_url
-    # retrieves a user's gravatar
-end
+    def avatar_url
+        # retrieves a user's gravatar
+    end
     
 
 end
