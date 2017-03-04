@@ -1,7 +1,11 @@
 class Ride < ActiveRecord::Base
     
-    belongs_to User
-    has_one Carpool
+    belongs_to :user # driver User
+    has_many :carpools
+    has_many :users, through: :carpools
+    
+    
+
     
     def seats_left
         # calculate number of available seats
