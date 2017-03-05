@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 
     has_many :carpools
     has_many :rides, through: :carpools
+    
 
     def calculate_ratings
         # takes average of all ratings associated with a user
