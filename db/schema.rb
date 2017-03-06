@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306154952) do
+ActiveRecord::Schema.define(version: 20170306155642) do
 
   create_table "carpools", force: :cascade do |t|
     t.float    "total_price"
@@ -24,6 +24,18 @@ ActiveRecord::Schema.define(version: 20170306154952) do
   add_index "carpools", ["id"], name: "index_carpools_on_id", unique: true
   add_index "carpools", ["ride_id"], name: "index_carpools_on_ride_id"
   add_index "carpools", ["user_id"], name: "index_carpools_on_user_id"
+
+  create_table "disbursements", force: :cascade do |t|
+    t.integer  "disbursement_id"
+    t.integer  "payment_id"
+    t.integer  "stripe_disbursement_id"
+    t.integer  "user_id"
+    t.datetime "disbursed_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "disbursements", ["disbursement_id"], name: "index_disbursements_on_disbursement_id"
 
   create_table "messages", force: :cascade do |t|
     t.text     "content"
