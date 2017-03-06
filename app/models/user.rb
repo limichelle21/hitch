@@ -9,15 +9,15 @@ class User < ActiveRecord::Base
     has_many :messages
     has_many :payments
     has_many :disbursements
+    has_many :ratings
     
 
-    def calculate_ratings
+    
+    def average_rating
         # takes average of all ratings associated with a user
+        
     end
 
-    def save_rating
-        # Save rating integer from email response to a user's recor
-    end
 
 
     def avatar_url
