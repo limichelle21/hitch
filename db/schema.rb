@@ -11,14 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306161438) do
+ActiveRecord::Schema.define(version: 20170306170606) do
 
   create_table "carpools", force: :cascade do |t|
     t.float    "total_price"
     t.integer  "user_id"
     t.integer  "ride_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "rider_number"
+    t.float    "total_payment"
   end
 
   add_index "carpools", ["id"], name: "index_carpools_on_id", unique: true
@@ -26,16 +28,12 @@ ActiveRecord::Schema.define(version: 20170306161438) do
   add_index "carpools", ["user_id"], name: "index_carpools_on_user_id"
 
   create_table "disbursements", force: :cascade do |t|
-    t.integer  "disbursement_id"
-    t.integer  "payment_id"
     t.integer  "stripe_disbursement_id"
     t.integer  "user_id"
     t.datetime "disbursed_at"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
-
-  add_index "disbursements", ["disbursement_id"], name: "index_disbursements_on_disbursement_id"
 
   create_table "messages", force: :cascade do |t|
     t.text     "content"
@@ -44,13 +42,9 @@ ActiveRecord::Schema.define(version: 20170306161438) do
     t.integer  "carpool_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "message_id"
   end
 
-  add_index "messages", ["message_id"], name: "index_messages_on_message_id"
-
   create_table "payments", force: :cascade do |t|
-    t.integer  "payment_id"
     t.integer  "carpool_id"
     t.integer  "user_id"
     t.datetime "paid_at"
@@ -61,14 +55,11 @@ ActiveRecord::Schema.define(version: 20170306161438) do
     t.datetime "updated_at",      null: false
   end
 
-  add_index "payments", ["payment_id"], name: "index_payments_on_payment_id"
-
   create_table "rides", force: :cascade do |t|
     t.date     "ride_date"
     t.string   "departure_location"
     t.string   "arrival_location"
     t.float    "seat_price"
-    t.float    "payments"
     t.integer  "total_seats"
     t.integer  "available_seats"
     t.integer  "reserved_seats"
@@ -77,11 +68,11 @@ ActiveRecord::Schema.define(version: 20170306161438) do
     t.boolean  "completed"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-    t.integer  "ride_id"
+    t.integer  "user_id"
     t.boolean  "booked"
   end
 
-  add_index "rides", ["ride_id"], name: "index_rides_on_ride_id"
+  add_index "rides", ["user_id"], name: "index_rides_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -98,9 +89,12 @@ ActiveRecord::Schema.define(version: 20170306161438) do
     t.datetime "updated_at",                          null: false
     t.string   "username"
     t.string   "phone_number"
-    t.integer  "ratings"
     t.integer  "average_rating"
     t.boolean  "verified"
+    t.string   "payment_card_token"
+    t.string   "bank_account_token"
+    t.string   "card_type"
+    t.string   "last_4"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

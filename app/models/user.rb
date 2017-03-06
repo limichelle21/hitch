@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
 
     has_many :carpools
     has_many :rides, through: :carpools
+    has_many :messages
+    has_many :payments
+    has_many :disbursements
     
 
     def calculate_ratings

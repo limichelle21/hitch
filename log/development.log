@@ -5876,3 +5876,279 @@ Migrating to AddBookedToRides (20170306161438)
             FROM sqlite_temp_master
             WHERE name='index_users_on_email' AND type='index'
 [0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to UpdateFieldsinSchema (20170306170606)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.9ms)[0m  [1mCREATE TEMPORARY TABLE "ausers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "username" varchar, "phone_number" varchar, "ratings" integer, "average_rating" integer, "verified" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.6ms)[0m  select sqlite_version(*)
+  [1m[36m (1.1ms)[0m  [1mCREATE UNIQUE INDEX "tindex_ausers_on_reset_password_token" ON "ausers" ("reset_password_token")[0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "tindex_ausers_on_email" ON "ausers" ("email")
+  [1m[36m (0.6ms)[0m  [1mSELECT * FROM "users"[0m
+  [1m[35m (2.3ms)[0m  DROP TABLE "users"
+  [1m[36m (0.3ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "username" varchar, "phone_number" varchar, "average_rating" integer, "verified" boolean) [0m
+  [1m[35m (0.2ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_ausers_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_ausers_on_email' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_ausers_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_ausers_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.6ms)[0m  CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "ausers"[0m
+  [1m[35m (0.3ms)[0m  DROP TABLE "ausers"
+  [1m[36m (0.2ms)[0m  [1mCREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "ride_date" date, "departure_location" varchar, "arrival_location" varchar, "seat_price" float, "payments" float, "total_seats" integer, "available_seats" integer, "reserved_seats" integer, "notes" text, "total_ride_amount" float, "completed" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "ride_id" integer, "booked" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_ride_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_ride_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "tindex_arides_on_ride_id" ON "arides" ("ride_id")[0m
+  [1m[35m (0.5ms)[0m  SELECT * FROM "rides"
+  [1m[36m (0.6ms)[0m  [1mDROP TABLE "rides"[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "ride_date" date, "departure_location" varchar, "arrival_location" varchar, "seat_price" float, "total_seats" integer, "available_seats" integer, "reserved_seats" integer, "notes" text, "total_ride_amount" float, "completed" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "ride_id" integer, "booked" boolean) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_ride_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_ride_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  CREATE  INDEX "index_rides_on_ride_id" ON "rides" ("ride_id")
+  [1m[36m (0.2ms)[0m  [1mSELECT * FROM "arides"[0m
+  [1m[35m (0.3ms)[0m  DROP TABLE "arides"
+  [1m[36m (0.2ms)[0m  [1mCREATE TEMPORARY TABLE "apayments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "payment_id" integer, "carpool_id" integer, "user_id" integer, "paid_at" datetime, "stripe_id" integer, "disbursement_id" integer, "payment_amount" float, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_payments_on_payment_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_payments_on_payment_id' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE  INDEX "tindex_apayments_on_payment_id" ON "apayments" ("payment_id")[0m
+  [1m[35m (0.4ms)[0m  SELECT * FROM "payments"
+  [1m[36m (0.6ms)[0m  [1mDROP TABLE "payments"[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "payments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "carpool_id" integer, "user_id" integer, "paid_at" datetime, "stripe_id" integer, "disbursement_id" integer, "payment_amount" float, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_apayments_on_payment_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_apayments_on_payment_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "apayments"
+  [1m[36m (0.2ms)[0m  [1mDROP TABLE "apayments"[0m
+  [1m[35m (0.2ms)[0m  CREATE TEMPORARY TABLE "adisbursements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "disbursement_id" integer, "payment_id" integer, "stripe_disbursement_id" integer, "user_id" integer, "disbursed_at" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_disbursements_on_disbursement_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_disbursements_on_disbursement_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "tindex_adisbursements_on_disbursement_id" ON "adisbursements" ("disbursement_id")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "disbursements"[0m
+  [1m[35m (0.3ms)[0m  DROP TABLE "disbursements"
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "disbursements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "payment_id" integer, "stripe_disbursement_id" integer, "user_id" integer, "disbursed_at" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_adisbursements_on_disbursement_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_adisbursements_on_disbursement_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "adisbursements"[0m
+  [1m[35m (0.1ms)[0m  DROP TABLE "adisbursements"
+  [1m[36m (0.2ms)[0m  [1mCREATE TEMPORARY TABLE "adisbursements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "payment_id" integer, "stripe_disbursement_id" integer, "user_id" integer, "disbursed_at" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "disbursements"
+  [1m[36m (0.1ms)[0m  [1mDROP TABLE "disbursements"[0m
+  [1m[35m (0.1ms)[0m  CREATE TABLE "disbursements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "stripe_disbursement_id" integer, "user_id" integer, "disbursed_at" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "adisbursements"[0m
+  [1m[35m (0.1ms)[0m  DROP TABLE "adisbursements"
+  [1m[36m (0.1ms)[0m  [1mCREATE TEMPORARY TABLE "amessages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "content" text, "sent_at" datetime, "username" varchar, "carpool_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "message_id" integer) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_messages_on_message_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_messages_on_message_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "tindex_amessages_on_message_id" ON "amessages" ("message_id")[0m
+  [1m[35m (0.3ms)[0m  SELECT * FROM "messages"
+  [1m[36m (0.4ms)[0m  [1mDROP TABLE "messages"[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "content" text, "sent_at" datetime, "username" varchar, "carpool_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_amessages_on_message_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_amessages_on_message_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "amessages"
+  [1m[36m (0.1ms)[0m  [1mDROP TABLE "amessages"[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "users" ADD "payment_card_token" varchar
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "users" ADD "bank_account_token" varchar[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "users" ADD "card_type" varchar
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "users" ADD "last_4" varchar[0m
+  [1m[35m (0.2ms)[0m  CREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "ride_date" date, "departure_location" varchar, "arrival_location" varchar, "seat_price" float, "total_seats" integer, "available_seats" integer, "reserved_seats" integer, "notes" text, "total_ride_amount" float, "completed" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer, "booked" boolean) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_ride_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_ride_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "tindex_arides_on_ride_id" ON "arides" ("user_id")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "rides"[0m
+  [1m[35m (0.2ms)[0m  DROP TABLE "rides"
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "ride_date" date, "departure_location" varchar, "arrival_location" varchar, "seat_price" float, "total_seats" integer, "available_seats" integer, "reserved_seats" integer, "notes" text, "total_ride_amount" float, "completed" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer, "booked" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_ride_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_ride_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_rides_on_ride_id" ON "rides" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "arides"
+  [1m[36m (0.1ms)[0m  [1mDROP TABLE "arides"[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_ride_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_ride_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_ride_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_ride_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_ride_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_ride_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_rides_on_user_id" ON "rides" ("user_id")[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_user_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_ride_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_ride_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  DROP INDEX "index_rides_on_ride_id"
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "carpools" ADD "rider_number" integer[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "carpools" ADD "total_payment" float
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170306170606"]]
+  [1m[35m (2.8ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_ride_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_ride_id' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
