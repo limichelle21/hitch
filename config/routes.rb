@@ -1,4 +1,36 @@
 Rails.application.routes.draw do
+  get 'carpools/new'
+
+  get 'carpools/create'
+
+  get 'messages/index'
+
+  get 'messages/show'
+
+  get 'messages/new'
+
+  get 'messages/create'
+
+  get 'rides/index'
+
+  get 'rides/show'
+
+  get 'rides/new'
+
+  get 'rides/create'
+
+  get 'rides/update'
+
+  get 'users/index'
+
+  get 'users/show'
+
+  get 'users/new'
+
+  get 'users/create'
+
+  get 'users/update'
+
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

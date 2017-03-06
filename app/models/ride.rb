@@ -5,9 +5,9 @@ class Ride < ActiveRecord::Base
     has_many :users, through: :carpools
     
     
-
     
     def seats_left
+        
         # calculate number of available seats
     end
     
