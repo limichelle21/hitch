@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306203137) do
+ActiveRecord::Schema.define(version: 20170309023758) do
 
   create_table "carpools", force: :cascade do |t|
     t.float    "total_price"
@@ -35,6 +35,8 @@ ActiveRecord::Schema.define(version: 20170306203137) do
     t.datetime "updated_at",             null: false
   end
 
+  add_index "disbursements", ["user_id"], name: "index_disbursements_on_user_id"
+
   create_table "messages", force: :cascade do |t|
     t.text     "content"
     t.datetime "sent_at"
@@ -43,6 +45,8 @@ ActiveRecord::Schema.define(version: 20170306203137) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "messages", ["carpool_id"], name: "index_messages_on_carpool_id"
 
   create_table "payments", force: :cascade do |t|
     t.integer  "carpool_id"
@@ -55,6 +59,9 @@ ActiveRecord::Schema.define(version: 20170306203137) do
     t.datetime "updated_at",      null: false
   end
 
+  add_index "payments", ["carpool_id"], name: "index_payments_on_carpool_id"
+  add_index "payments", ["user_id"], name: "index_payments_on_user_id"
+
   create_table "ratings", force: :cascade do |t|
     t.integer  "rating_value"
     t.text     "rating_comment"
@@ -62,6 +69,8 @@ ActiveRecord::Schema.define(version: 20170306203137) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
+
+  add_index "ratings", ["user_id"], name: "index_ratings_on_user_id"
 
   create_table "rides", force: :cascade do |t|
     t.date     "ride_date"
