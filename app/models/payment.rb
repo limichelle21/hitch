@@ -3,6 +3,10 @@ class Payment < ActiveRecord::Base
     belongs_to :carpool
     belongs_to :disbursement
     belongs_to :user
+    
+    validates :carpool, presence: true
+    validates :disbursement, presence: true
+    validates :user, presence: true
 
     
     def save_stripe_token

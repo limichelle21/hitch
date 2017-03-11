@@ -10,14 +10,12 @@ class User < ActiveRecord::Base
     has_many :payments
     has_many :disbursements
     has_many :ratings
-    
 
     
     def average_rating
         # takes average of all ratings associated with a user
         
     end
-
 
 
     def avatar_url

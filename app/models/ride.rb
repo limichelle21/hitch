@@ -4,14 +4,18 @@ class Ride < ActiveRecord::Base
     has_many :carpools
     has_many :users, through: :carpools
     
+    validates :user, presence: true
     
     
+    # Calculate the number of available seats
     def seats_left
-        
-        # calculate number of available seats
+        available_seats = total_seats - reserved_seats
     end
     
+    
+    # Calculate the running total of total_ride_amount based on number of Carpools
     def total_amount
+        total_ride_amount = carpools.collect { |c| c.present? ? c.total_payment : 0 }.sum 
     end
     
     
@@ -24,11 +28,6 @@ class Ride < ActiveRecord::Base
     def confirm_ride_email
         # send email to passenger with confirmation/Payment ID
     end
-    
-    def add_payment
-        # add seat_price times number of seats to Payment value
-    end
-    
         
 # Functions when a passenger cancels ride
         
@@ -43,9 +42,10 @@ class Ride < ActiveRecord::Base
         
 # Functions when ride is completed
         
+    # compare ride_date with current_date
+    # if ride_date > current_date, marke ride.completed as TRUE
     def ride_completed?
-        # compare ride_date with current_date
-        # if ride_date > current_date, marke ride.completed as TRUE
+        ride_date > Time.now ? completed = true : completed = false     
     end
     
     def driver_payment

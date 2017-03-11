@@ -55,9 +55,8 @@ rides = Ride.all
 
 15.times do
     Carpool.create!(
-        total_price: RandomData.random_total_amount,
-        user_id: users.sample,
-        ride_id: rides.sample,
+        user_id: users.sample.id,
+        ride_id: rides.sample.id,
         total_payment: RandomData.random_total_amount,
         rider_number: RandomData.random_reserved_seats
         )
@@ -72,7 +71,7 @@ carpools = Carpool.all
     Message.create!(
         content: Faker::Lorem.sentence,
         sent_at: Faker::Time.between(2.days.ago, Date.today, :all),
-        username: users.sample.username,
+        user: users.sample,
         carpool: carpools.sample
         )
     

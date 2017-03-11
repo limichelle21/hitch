@@ -3,6 +3,9 @@ class Disbursement < ActiveRecord::Base
     has_many :payments
     belongs_to :user
     
+    validates :user, presence: true
+    
+    
     def disburse
         # disburse amount to driver upon request
     end
