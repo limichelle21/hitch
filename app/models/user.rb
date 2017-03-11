@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
     
     def average_rating
         # takes average of all ratings associated with a user
-        
+        user.ratings.collect / user.ratings.count
     end
 
 

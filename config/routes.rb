@@ -1,42 +1,22 @@
 Rails.application.routes.draw do
-  get 'carpools/new'
 
-  get 'carpools/create'
-
-  get 'messages/index'
-
-  get 'messages/show'
-
-  get 'messages/new'
-
-  get 'messages/create'
-
-  get 'rides/index'
-
-  get 'rides/show'
-
-  get 'rides/new'
-
-  get 'rides/create'
-
-  get 'rides/update'
-
-  get 'users/index'
-
-  get 'users/show'
-
-  get 'users/new'
-
-  get 'users/create'
-
-  get 'users/update'
-
-  devise_for :users
+  devise_for :users, controllers: {
+      registrations: 'users/registrations',
+      sessions: 'users/sessions'
+      }
+    
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
    root 'welcome#index'
+    
+    resources :rides, only: [:index, :show, :new, :create, :update] do
+        resources :carpools, only: [:show] do
+            resources :messages, only: [:index, :new, :create]
+        end
+    end
+    
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -46,6 +26,7 @@ Rails.application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
+
 
   # Example resource route with options:
   #   resources :products do
