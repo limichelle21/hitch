@@ -18917,3 +18917,707 @@ Migrating to RemovePriceFromCarpool (20170310221137)
   [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "ratings"[0m
   [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "payments"
   [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "disbursements"[0m
+  [1m[36mUser Load (1.4ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mRating Load (0.6ms)[0m  SELECT "ratings".* FROM "ratings"
+  [1m[36mRating Load (0.3ms)[0m  [1mSELECT  "ratings".* FROM "ratings"  ORDER BY "ratings"."id" ASC LIMIT 1[0m
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 9]]
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 9]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mCarpool Load (0.7ms)[0m  [1mSELECT  "carpools".* FROM "carpools"  ORDER BY "carpools"."id" ASC LIMIT 1[0m
+  [1m[35mCarpool Load (0.3ms)[0m  SELECT  "carpools".* FROM "carpools"  ORDER BY "carpools"."id" ASC LIMIT 1
+  [1m[36mUser Load (1.5ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 6]]
+  [1m[35mUser Load (8.0ms)[0m  SELECT  "users".* FROM "users"  ORDER BY "users"."id" DESC LIMIT 1
+  [1m[36mRide Load (1.1ms)[0m  [1mSELECT  "rides".* FROM "rides"  ORDER BY "rides"."id" DESC LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  begin transaction
+  [1m[36mSQL (3.6ms)[0m  [1mINSERT INTO "carpools" ("user_id", "ride_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 20], ["ride_id", 30], ["created_at", "2017-03-13 15:30:26.617728"], ["updated_at", "2017-03-13 15:30:26.617728"]]
+  [1m[35m (1.1ms)[0m  commit transaction
+  [1m[36m (1.7ms)[0m  [1mCREATE TABLE "carpools" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "ride_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "rider_number" integer, "total_payment" float) [0m
+  [1m[35m (0.7ms)[0m  select sqlite_version(*)
+  [1m[36m (2.0ms)[0m  [1mCREATE UNIQUE INDEX "index_carpools_on_id" ON "carpools" ("id")[0m
+  [1m[35m (0.2ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_id' AND type='index'
+
+  [1m[36m (1.4ms)[0m  [1mCREATE  INDEX "index_carpools_on_ride_id" ON "carpools" ("ride_id")[0m
+  [1m[35m (0.3ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_ride_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_ride_id' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_id' AND type='index'
+[0m
+  [1m[35m (1.2ms)[0m  CREATE  INDEX "index_carpools_on_user_id" ON "carpools" ("user_id")
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE "disbursements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "stripe_disbursement_id" integer, "user_id" integer, "disbursed_at" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (1.4ms)[0m  CREATE  INDEX "index_disbursements_on_user_id" ON "disbursements" ("user_id")
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE "messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "content" text, "sent_at" datetime, "carpool_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer) [0m
+  [1m[35m (1.3ms)[0m  CREATE  INDEX "index_messages_on_carpool_id" ON "messages" ("carpool_id")
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE "payments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "carpool_id" integer, "user_id" integer, "paid_at" datetime, "stripe_id" integer, "disbursement_id" integer, "payment_amount" float, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (1.1ms)[0m  CREATE  INDEX "index_payments_on_carpool_id" ON "payments" ("carpool_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_payments_on_carpool_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_payments_on_carpool_id' AND type='index'
+[0m
+  [1m[35m (1.1ms)[0m  CREATE  INDEX "index_payments_on_user_id" ON "payments" ("user_id")
+  [1m[36m (1.3ms)[0m  [1mCREATE TABLE "ratings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rating_value" integer, "rating_comment" text, "user_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (1.4ms)[0m  CREATE  INDEX "index_ratings_on_user_id" ON "ratings" ("user_id")
+  [1m[36m (1.8ms)[0m  [1mCREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "ride_date" date, "departure_location" varchar, "arrival_location" varchar, "seat_price" float, "total_seats" integer, "available_seats" integer, "reserved_seats" integer, "notes" text, "total_ride_amount" float, "completed" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer, "booked" boolean) [0m
+  [1m[35m (2.0ms)[0m  CREATE  INDEX "index_rides_on_user_id" ON "rides" ("user_id")
+  [1m[36m (1.4ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "username" varchar, "phone_number" varchar, "average_rating" integer, "verified" boolean, "payment_card_token" varchar, "bank_account_token" varchar, "card_type" varchar, "last_4" varchar) [0m
+  [1m[35m (2.8ms)[0m  CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")
+  [1m[36m (2.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (1.2ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36m (1.3ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (1.3ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.2ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170310221137')
+  [1m[36m (1.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170304144612')[0m
+  [1m[35m (1.6ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170304150340')
+  [1m[36m (1.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170304154155')[0m
+  [1m[35m (1.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170304155725')
+  [1m[36m (1.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170304160929')[0m
+  [1m[35m (1.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170305012855')
+  [1m[36m (1.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170306154952')[0m
+  [1m[35m (1.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170306155642')
+  [1m[36m (1.4ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170306161438')[0m
+  [1m[35m (1.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170306170606')
+  [1m[36m (1.6ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170306203137')[0m
+  [1m[35m (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170309023758')
+  [1m[36m (1.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170310215723')[0m
+  [1m[35m (1.1ms)[0m  CREATE TABLE "carpools" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "ride_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "rider_number" integer, "total_payment" float) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  CREATE UNIQUE INDEX "index_carpools_on_id" ON "carpools" ("id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_id' AND type='index'
+[0m
+  [1m[35m (0.8ms)[0m  CREATE  INDEX "index_carpools_on_ride_id" ON "carpools" ("ride_id")
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_ride_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_ride_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_id' AND type='index'
+
+  [1m[36m (4.1ms)[0m  [1mCREATE  INDEX "index_carpools_on_user_id" ON "carpools" ("user_id")[0m
+  [1m[35m (2.0ms)[0m  CREATE TABLE "disbursements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "stripe_disbursement_id" integer, "user_id" integer, "disbursed_at" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (1.9ms)[0m  [1mCREATE  INDEX "index_disbursements_on_user_id" ON "disbursements" ("user_id")[0m
+  [1m[35m (1.7ms)[0m  CREATE TABLE "messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "content" text, "sent_at" datetime, "carpool_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer) 
+  [1m[36m (1.6ms)[0m  [1mCREATE  INDEX "index_messages_on_carpool_id" ON "messages" ("carpool_id")[0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE "payments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "carpool_id" integer, "user_id" integer, "paid_at" datetime, "stripe_id" integer, "disbursement_id" integer, "payment_amount" float, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (1.0ms)[0m  [1mCREATE  INDEX "index_payments_on_carpool_id" ON "payments" ("carpool_id")[0m
+  [1m[35m (0.2ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_payments_on_carpool_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_payments_on_carpool_id' AND type='index'
+
+  [1m[36m (1.3ms)[0m  [1mCREATE  INDEX "index_payments_on_user_id" ON "payments" ("user_id")[0m
+  [1m[35m (1.1ms)[0m  CREATE TABLE "ratings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rating_value" integer, "rating_comment" text, "user_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (1.7ms)[0m  [1mCREATE  INDEX "index_ratings_on_user_id" ON "ratings" ("user_id")[0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "ride_date" date, "departure_location" varchar, "arrival_location" varchar, "seat_price" float, "total_seats" integer, "available_seats" integer, "reserved_seats" integer, "notes" text, "total_ride_amount" float, "completed" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer, "booked" boolean) 
+  [1m[36m (2.2ms)[0m  [1mCREATE  INDEX "index_rides_on_user_id" ON "rides" ("user_id")[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "username" varchar, "phone_number" varchar, "average_rating" integer, "verified" boolean, "payment_card_token" varchar, "bank_account_token" varchar, "card_type" varchar, "last_4" varchar) 
+  [1m[36m (0.9ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.2ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36m (1.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (3.3ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (1.2ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.2ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (1.6ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170310221137')[0m
+  [1m[35m (1.5ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170304144612')
+  [1m[36m (1.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170304150340')[0m
+  [1m[35m (1.7ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170304154155')
+  [1m[36m (1.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170304155725')[0m
+  [1m[35m (0.8ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170304160929')
+  [1m[36m (1.6ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170305012855')[0m
+  [1m[35m (1.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170306154952')
+  [1m[36m (1.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170306155642')[0m
+  [1m[35m (0.9ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170306161438')
+  [1m[36m (0.9ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170306170606')[0m
+  [1m[35m (0.9ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170306203137')
+  [1m[36m (1.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170309023758')[0m
+  [1m[35m (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170310215723')
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'abby.torp@bartoletti.info' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "oscar"], ["email", "abby.torp@bartoletti.info"], ["phone_number", "128-928-7606"], ["encrypted_password", "$2a$10$HviFx8BOGe3LUfb.uZm2O.zuZb2z9SVenLNBQa.Wt627YnXMqKw1i"], ["verified", "t"], ["average_rating", 3], ["payment_card_token", "tv6qxnzbt"], ["bank_account_token", "fh12xfd10"], ["card_type", "Visa"], ["last_4", "1470"], ["created_at", "2017-03-13 15:31:21.300992"], ["updated_at", "2017-03-13 15:31:21.300992"]]
+  [1m[36m (0.5ms)[0m  [1mrollback transaction[0m
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE "carpools" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "ride_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "rider_number" integer, "total_payment" float) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (1.0ms)[0m  [1mCREATE UNIQUE INDEX "index_carpools_on_id" ON "carpools" ("id")[0m
+  [1m[35m (0.2ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_id' AND type='index'
+
+  [1m[36m (1.3ms)[0m  [1mCREATE  INDEX "index_carpools_on_ride_id" ON "carpools" ("ride_id")[0m
+  [1m[35m (0.2ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_ride_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_ride_id' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_id' AND type='index'
+[0m
+  [1m[35m (1.1ms)[0m  CREATE  INDEX "index_carpools_on_user_id" ON "carpools" ("user_id")
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE "disbursements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "stripe_disbursement_id" integer, "user_id" integer, "disbursed_at" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (1.2ms)[0m  CREATE  INDEX "index_disbursements_on_user_id" ON "disbursements" ("user_id")
+  [1m[36m (1.1ms)[0m  [1mCREATE TABLE "messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "content" text, "sent_at" datetime, "carpool_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer) [0m
+  [1m[35m (1.1ms)[0m  CREATE  INDEX "index_messages_on_carpool_id" ON "messages" ("carpool_id")
+  [1m[36m (1.8ms)[0m  [1mCREATE TABLE "payments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "carpool_id" integer, "user_id" integer, "paid_at" datetime, "stripe_id" integer, "disbursement_id" integer, "payment_amount" float, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.9ms)[0m  CREATE  INDEX "index_payments_on_carpool_id" ON "payments" ("carpool_id")
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_payments_on_carpool_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_payments_on_carpool_id' AND type='index'
+[0m
+  [1m[35m (2.6ms)[0m  CREATE  INDEX "index_payments_on_user_id" ON "payments" ("user_id")
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE "ratings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rating_value" integer, "rating_comment" text, "user_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (1.0ms)[0m  CREATE  INDEX "index_ratings_on_user_id" ON "ratings" ("user_id")
+  [1m[36m (1.6ms)[0m  [1mCREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "ride_date" date, "departure_location" varchar, "arrival_location" varchar, "seat_price" float, "total_seats" integer, "available_seats" integer, "reserved_seats" integer, "notes" text, "total_ride_amount" float, "completed" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer, "booked" boolean) [0m
+  [1m[35m (1.0ms)[0m  CREATE  INDEX "index_rides_on_user_id" ON "rides" ("user_id")
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "username" varchar, "phone_number" varchar, "average_rating" integer, "verified" boolean, "payment_card_token" varchar, "bank_account_token" varchar, "card_type" varchar, "last_4" varchar) [0m
+  [1m[35m (1.4ms)[0m  CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.9ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36m (1.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (1.3ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.5ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (5.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170310221137')
+  [1m[36m (1.6ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170304144612')[0m
+  [1m[35m (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170304150340')
+  [1m[36m (1.4ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170304154155')[0m
+  [1m[35m (1.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170304155725')
+  [1m[36m (0.9ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170304160929')[0m
+  [1m[35m (1.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170305012855')
+  [1m[36m (1.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170306154952')[0m
+  [1m[35m (1.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170306155642')
+  [1m[36m (1.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170306161438')[0m
+  [1m[35m (1.5ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170306170606')
+  [1m[36m (1.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170306203137')[0m
+  [1m[35m (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170309023758')
+  [1m[36m (1.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170310215723')[0m
+  [1m[35m (1.2ms)[0m  CREATE TABLE "carpools" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "ride_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "rider_number" integer, "total_payment" float) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (2.0ms)[0m  CREATE UNIQUE INDEX "index_carpools_on_id" ON "carpools" ("id")
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_id' AND type='index'
+[0m
+  [1m[35m (1.1ms)[0m  CREATE  INDEX "index_carpools_on_ride_id" ON "carpools" ("ride_id")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_ride_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_ride_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_carpools_on_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_carpools_on_id' AND type='index'
+
+  [1m[36m (0.8ms)[0m  [1mCREATE  INDEX "index_carpools_on_user_id" ON "carpools" ("user_id")[0m
+  [1m[35m (1.3ms)[0m  CREATE TABLE "disbursements" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "stripe_disbursement_id" integer, "user_id" integer, "disbursed_at" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (1.3ms)[0m  [1mCREATE  INDEX "index_disbursements_on_user_id" ON "disbursements" ("user_id")[0m
+  [1m[35m (1.1ms)[0m  CREATE TABLE "messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "content" text, "sent_at" datetime, "carpool_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer) 
+  [1m[36m (1.9ms)[0m  [1mCREATE  INDEX "index_messages_on_carpool_id" ON "messages" ("carpool_id")[0m
+  [1m[35m (1.6ms)[0m  CREATE TABLE "payments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "carpool_id" integer, "user_id" integer, "paid_at" datetime, "stripe_id" integer, "disbursement_id" integer, "payment_amount" float, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (1.1ms)[0m  [1mCREATE  INDEX "index_payments_on_carpool_id" ON "payments" ("carpool_id")[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_payments_on_carpool_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_payments_on_carpool_id' AND type='index'
+
+  [1m[36m (1.3ms)[0m  [1mCREATE  INDEX "index_payments_on_user_id" ON "payments" ("user_id")[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "ratings" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "rating_value" integer, "rating_comment" text, "user_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (1.7ms)[0m  [1mCREATE  INDEX "index_ratings_on_user_id" ON "ratings" ("user_id")[0m
+  [1m[35m (1.2ms)[0m  CREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "ride_date" date, "departure_location" varchar, "arrival_location" varchar, "seat_price" float, "total_seats" integer, "available_seats" integer, "reserved_seats" integer, "notes" text, "total_ride_amount" float, "completed" boolean, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer, "booked" boolean) 
+  [1m[36m (1.2ms)[0m  [1mCREATE  INDEX "index_rides_on_user_id" ON "rides" ("user_id")[0m
+  [1m[35m (1.2ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "username" varchar, "phone_number" varchar, "average_rating" integer, "verified" boolean, "payment_card_token" varchar, "bank_account_token" varchar, "card_type" varchar, "last_4" varchar) 
+  [1m[36m (1.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36m (1.1ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (1.3ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar NOT NULL) 
+  [1m[36m (1.3ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.2ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (1.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170310221137')[0m
+  [1m[35m (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170304144612')
+  [1m[36m (1.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170304150340')[0m
+  [1m[35m (1.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170304154155')
+  [1m[36m (1.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170304155725')[0m
+  [1m[35m (1.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170304160929')
+  [1m[36m (1.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170305012855')[0m
+  [1m[35m (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170306154952')
+  [1m[36m (1.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170306155642')[0m
+  [1m[35m (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170306161438')
+  [1m[36m (1.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170306170606')[0m
+  [1m[35m (1.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170306203137')
+  [1m[36m (1.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20170309023758')[0m
+  [1m[35m (1.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20170310215723')
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'rosie.oconnell@jacobs.org' LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "derick"], ["email", "rosie.oconnell@jacobs.org"], ["phone_number", "1-276-075-8306 x507"], ["encrypted_password", "$2a$10$SPtVguy1iX9RSJhcZpcBp.uR.BmDOcPU3k.8Gp2pPzreTbyTV62kC"], ["verified", "f"], ["average_rating", 3], ["payment_card_token", "cvut6h9or"], ["bank_account_token", "ec3pvv0rv"], ["card_type", "Visa"], ["last_4", "7445"], ["created_at", "2017-03-13 15:31:44.220392"], ["updated_at", "2017-03-13 15:31:44.220392"]]
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'cullen@schulist.co' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "zander.ohara"], ["email", "cullen@schulist.co"], ["phone_number", "1-876-441-7026"], ["encrypted_password", "$2a$10$ScB.FHpWw7pXjSEx0QKlFuIcFYuJhdZ.4bMCN.VVdGMlB7W9zWo.a"], ["verified", "f"], ["average_rating", 3], ["payment_card_token", "adnppr59e"], ["bank_account_token", "2o9pgxzpq"], ["card_type", "Visa"], ["last_4", "1987"], ["created_at", "2017-03-13 15:31:44.327065"], ["updated_at", "2017-03-13 15:31:44.327065"]]
+  [1m[36m (8.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'austen@beatty.org' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "hardy"], ["email", "austen@beatty.org"], ["phone_number", "854-297-2481 x366"], ["encrypted_password", "$2a$10$SO01ib0r8F1bf/Znv9bgOe8mbSvDVBrulKGByrp9ublHxyku4955q"], ["verified", "f"], ["average_rating", 3], ["payment_card_token", "pok9d68wh"], ["bank_account_token", "241mwrssu"], ["card_type", "American Express"], ["last_4", "3445"], ["created_at", "2017-03-13 15:31:44.439930"], ["updated_at", "2017-03-13 15:31:44.439930"]]
+  [1m[36m (9.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'thea.zieme@crona.co' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "trea"], ["email", "thea.zieme@crona.co"], ["phone_number", "1-344-630-1608 x711"], ["encrypted_password", "$2a$10$mHAwttUSsLwyhJ.CAdZa0ejFRwLjgG9Oc/p7BPSi0.L6aWFO7euzS"], ["verified", "f"], ["average_rating", 5], ["payment_card_token", "lj0r63k49"], ["bank_account_token", "2k5ijzy1j"], ["card_type", "American Express"], ["last_4", "8739"], ["created_at", "2017-03-13 15:31:44.560434"], ["updated_at", "2017-03-13 15:31:44.560434"]]
+  [1m[36m (9.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'tyrel.harvey@langosh.name' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "elinore.goldner"], ["email", "tyrel.harvey@langosh.name"], ["phone_number", "931-613-3128 x94438"], ["encrypted_password", "$2a$10$3yx5RBhWFkl4JLICntipbO.xGNz2lo1zSUlxDf.baVrRr0s2L7h7m"], ["verified", "t"], ["average_rating", 5], ["payment_card_token", "sr9wx15qd"], ["bank_account_token", "c9qhxgumt"], ["card_type", "Visa"], ["last_4", "1064"], ["created_at", "2017-03-13 15:31:44.678326"], ["updated_at", "2017-03-13 15:31:44.678326"]]
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'dangelo@schimmelbartell.co' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "christop.mohr"], ["email", "dangelo@schimmelbartell.co"], ["phone_number", "(879) 779-9238"], ["encrypted_password", "$2a$10$oTwZ0hsVxkEx0cWsTs2cXeel2cJE7AFsGbEhdMKGrj5V6Zcs.rmTG"], ["verified", "f"], ["average_rating", 3], ["payment_card_token", "6wq0lejyd"], ["bank_account_token", "kg0g4o90g"], ["card_type", "American Express"], ["last_4", "8808"], ["created_at", "2017-03-13 15:31:44.783826"], ["updated_at", "2017-03-13 15:31:44.783826"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'lou@schroederhand.biz' LIMIT 1[0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "jerald"], ["email", "lou@schroederhand.biz"], ["phone_number", "947-720-0165"], ["encrypted_password", "$2a$10$lf3HXeVSC5/vWQn4gqrPmuVU5UDZcdIST2tKpuAvB/7m2A8GEA07q"], ["verified", "t"], ["average_rating", 2], ["payment_card_token", "cclc6cblu"], ["bank_account_token", "fdfy6pd9e"], ["card_type", "MasterCard"], ["last_4", "2989"], ["created_at", "2017-03-13 15:31:44.884345"], ["updated_at", "2017-03-13 15:31:44.884345"]]
+  [1m[36m (9.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'nettie_altenwerth@marquardtvon.co' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "stanley"], ["email", "nettie_altenwerth@marquardtvon.co"], ["phone_number", "(606) 315-1256 x63201"], ["encrypted_password", "$2a$10$H2eNHj9Zn.fe.FDOxo6Wl.acNjOrBh.f0tULdtrBqN7H9IqyEMBIe"], ["verified", "t"], ["average_rating", 2], ["payment_card_token", "ez7da3rjj"], ["bank_account_token", "5yv4kig5f"], ["card_type", "MasterCard"], ["last_4", "6209"], ["created_at", "2017-03-13 15:31:45.003566"], ["updated_at", "2017-03-13 15:31:45.003566"]]
+  [1m[36m (8.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'maurice@gutkowski.org' LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "hattie"], ["email", "maurice@gutkowski.org"], ["phone_number", "442.748.6606 x5744"], ["encrypted_password", "$2a$10$7EhTWfJrU/t7QhyCUnQumeZqgJuEoxxlpn.6M0x7NULkdZsjj0tem"], ["verified", "t"], ["average_rating", 2], ["payment_card_token", "66bsj6gzh"], ["bank_account_token", "v8kyjt11v"], ["card_type", "Visa"], ["last_4", "1599"], ["created_at", "2017-03-13 15:31:45.115593"], ["updated_at", "2017-03-13 15:31:45.115593"]]
+  [1m[36m (9.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'marques_damore@pfannerstill.io' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "janet"], ["email", "marques_damore@pfannerstill.io"], ["phone_number", "(679) 484-9310 x94908"], ["encrypted_password", "$2a$10$jcKR7/DMUORGct9hHg035OOk318e5YjeB8uCWoZuH/jtv8RRQFQHS"], ["verified", "f"], ["average_rating", 2], ["payment_card_token", "vbwv9usi2"], ["bank_account_token", "rcsi91x50"], ["card_type", "American Express"], ["last_4", "2316"], ["created_at", "2017-03-13 15:31:45.229572"], ["updated_at", "2017-03-13 15:31:45.229572"]]
+  [1m[36m (8.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'lori_wiegand@west.name' LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "norbert_hagenes"], ["email", "lori_wiegand@west.name"], ["phone_number", "1-560-192-8732"], ["encrypted_password", "$2a$10$4IiJoXV6/Z3AfvgpOGNfJenDDULSYf9xDalrC/u18YtqUHLy2qGC6"], ["verified", "t"], ["average_rating", 1], ["payment_card_token", "ye5v12py0"], ["bank_account_token", "di668p6te"], ["card_type", "MasterCard"], ["last_4", "8557"], ["created_at", "2017-03-13 15:31:45.335705"], ["updated_at", "2017-03-13 15:31:45.335705"]]
+  [1m[36m (9.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'jonathon_johns@lindgrenpowlowski.org' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "penelope.buckridge"], ["email", "jonathon_johns@lindgrenpowlowski.org"], ["phone_number", "1-591-275-7317"], ["encrypted_password", "$2a$10$/ANC6PhH1AoEZ.HSzGzAM.qjcZ6lqcSUw3tvvrdlz5wpLg8ivOUzO"], ["verified", "f"], ["average_rating", 5], ["payment_card_token", "xg3mli0d5"], ["bank_account_token", "2zcku2t4m"], ["card_type", "MasterCard"], ["last_4", "8775"], ["created_at", "2017-03-13 15:31:45.447632"], ["updated_at", "2017-03-13 15:31:45.447632"]]
+  [1m[36m (8.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'daisha@price.co' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "golda"], ["email", "daisha@price.co"], ["phone_number", "383-174-7879 x109"], ["encrypted_password", "$2a$10$hcQzZWEscVnx63kP48oFJehG7whjse5ikDXYZfUG/NTOz3Sqw2QOK"], ["verified", "t"], ["average_rating", 1], ["payment_card_token", "1m1ylo1cc"], ["bank_account_token", "v75x04gag"], ["card_type", "MasterCard"], ["last_4", "1426"], ["created_at", "2017-03-13 15:31:45.570132"], ["updated_at", "2017-03-13 15:31:45.570132"]]
+  [1m[36m (4.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'pierce_sporer@blickokon.co' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "liza.torp"], ["email", "pierce_sporer@blickokon.co"], ["phone_number", "1-882-819-1640"], ["encrypted_password", "$2a$10$QR3JvM0gJEsgL1kkkWa95uj50ZtGe2yWu60GLdJidU89oObNzKFlS"], ["verified", "t"], ["average_rating", 4], ["payment_card_token", "3hn1sc2kh"], ["bank_account_token", "gi3qm7xz2"], ["card_type", "Visa"], ["last_4", "4166"], ["created_at", "2017-03-13 15:31:45.684557"], ["updated_at", "2017-03-13 15:31:45.684557"]]
+  [1m[36m (9.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'tremaine_kihn@schneiderosinski.biz' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "anibal.murazik"], ["email", "tremaine_kihn@schneiderosinski.biz"], ["phone_number", "846-943-4760"], ["encrypted_password", "$2a$10$9IVdaBT.RZ.W6yNuYcgkVOLfpSxh7z.uisl1J9IRZ/W4roUuqK/nq"], ["verified", "f"], ["average_rating", 3], ["payment_card_token", "teaabp5a1"], ["bank_account_token", "6833m93ak"], ["card_type", "Visa"], ["last_4", "6674"], ["created_at", "2017-03-13 15:31:45.795979"], ["updated_at", "2017-03-13 15:31:45.795979"]]
+  [1m[36m (9.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'lemuel@schamberger.name' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "sister"], ["email", "lemuel@schamberger.name"], ["phone_number", "1-455-432-2696 x06576"], ["encrypted_password", "$2a$10$8/OtfV/04V8BeUOhCr/UqOlhqwrM1QjNDaMjf32i3AWQaH.CiUwYC"], ["verified", "f"], ["average_rating", 1], ["payment_card_token", "5d20eav8k"], ["bank_account_token", "4d4erd6du"], ["card_type", "MasterCard"], ["last_4", "6579"], ["created_at", "2017-03-13 15:31:45.916136"], ["updated_at", "2017-03-13 15:31:45.916136"]]
+  [1m[36m (9.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'gardner@rosenbaum.org' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "manuela"], ["email", "gardner@rosenbaum.org"], ["phone_number", "364.050.4576 x516"], ["encrypted_password", "$2a$10$NH98zJWXxxZR034R4OztR.8.sPhmd5ab8TrHEqSHKisIssWQpp1lO"], ["verified", "t"], ["average_rating", 4], ["payment_card_token", "bu2d6ds2a"], ["bank_account_token", "oitcx0fjd"], ["card_type", "Visa"], ["last_4", "9198"], ["created_at", "2017-03-13 15:31:46.030871"], ["updated_at", "2017-03-13 15:31:46.030871"]]
+  [1m[36m (9.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'lincoln.medhurst@hartmann.org' LIMIT 1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "adele"], ["email", "lincoln.medhurst@hartmann.org"], ["phone_number", "1-619-056-5081 x0024"], ["encrypted_password", "$2a$10$6kdnmjihf4y84GhZUSxF5.DrgNfhxkxz2jjnmuWqO0EQufoyox5Ym"], ["verified", "f"], ["average_rating", 2], ["payment_card_token", "dxt2w08r1"], ["bank_account_token", "ps5wsikr0"], ["card_type", "Visa"], ["last_4", "5662"], ["created_at", "2017-03-13 15:31:46.146611"], ["updated_at", "2017-03-13 15:31:46.146611"]]
+  [1m[36m (9.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'brooke_volkman@macejkovicharvey.io' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "caden.koelpin"], ["email", "brooke_volkman@macejkovicharvey.io"], ["phone_number", "747.069.2733"], ["encrypted_password", "$2a$10$8Oc9MLukvtB.O6RRclAfCeE0IasEyiEDcGf4qaUGmUB8XGMFuFnwq"], ["verified", "f"], ["average_rating", 2], ["payment_card_token", "pe55pfilj"], ["bank_account_token", "0shpshsfn"], ["card_type", "Visa"], ["last_4", "2376"], ["created_at", "2017-03-13 15:31:46.256647"], ["updated_at", "2017-03-13 15:31:46.256647"]]
+  [1m[36m (9.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'june_prosacco@strosin.com' LIMIT 1[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("username", "email", "phone_number", "encrypted_password", "verified", "average_rating", "payment_card_token", "bank_account_token", "card_type", "last_4", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["username", "barry"], ["email", "june_prosacco@strosin.com"], ["phone_number", "1-863-501-7948 x92560"], ["encrypted_password", "$2a$10$8xP9zFlOTvh4xJR4fvtJk.ujggAoTP3KaQ5B0K4e1pcJyZ4mh61p2"], ["verified", "t"], ["average_rating", 5], ["payment_card_token", "bsftlhuly"], ["bank_account_token", "egoe55ysu"], ["card_type", "American Express"], ["last_4", "2038"], ["created_at", "2017-03-13 15:31:46.369806"], ["updated_at", "2017-03-13 15:31:46.369806"]]
+  [1m[36m (8.7ms)[0m  [1mcommit transaction[0m
+  [1m[35mUser Load (0.7ms)[0m  SELECT "users".* FROM "users"
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-16"], ["departure_location", "Ferryfort"], ["arrival_location", "New Earlton"], ["seat_price", 35.0], ["total_seats", 5], ["available_seats", 1], ["reserved_seats", 2], ["notes", "Dolor atque sed ea minima amet."], ["total_ride_amount", 100.0], ["completed", "f"], ["user_id", 19], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.423100"], ["updated_at", "2017-03-13 15:31:46.423100"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-17"], ["departure_location", "Alihaven"], ["arrival_location", "Zemlakhaven"], ["seat_price", 20.0], ["total_seats", 4], ["available_seats", 3], ["reserved_seats", 3], ["notes", "Ut dicta ut inventore."], ["total_ride_amount", 80.0], ["completed", "t"], ["user_id", 12], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.429024"], ["updated_at", "2017-03-13 15:31:46.429024"]]
+  [1m[35m (0.8ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-06"], ["departure_location", "North Gaston"], ["arrival_location", "New Wainotown"], ["seat_price", 30.0], ["total_seats", 3], ["available_seats", 2], ["reserved_seats", 1], ["notes", "Eos sunt dolorem ut accusamus incidunt iusto voluptate."], ["total_ride_amount", 60.0], ["completed", "f"], ["user_id", 1], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.433264"], ["updated_at", "2017-03-13 15:31:46.433264"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-11"], ["departure_location", "Balistreriburgh"], ["arrival_location", "Andreaneside"], ["seat_price", 30.0], ["total_seats", 5], ["available_seats", 2], ["reserved_seats", 2], ["notes", "Sint alias cumque voluptatum dolorum minima amet."], ["total_ride_amount", 60.0], ["completed", "t"], ["user_id", 16], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.441395"], ["updated_at", "2017-03-13 15:31:46.441395"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-12"], ["departure_location", "West Laila"], ["arrival_location", "Mayerfort"], ["seat_price", 35.0], ["total_seats", 5], ["available_seats", 1], ["reserved_seats", 3], ["notes", "Rem inventore consequatur delectus et."], ["total_ride_amount", 70.0], ["completed", "t"], ["user_id", 5], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.445559"], ["updated_at", "2017-03-13 15:31:46.445559"]]
+  [1m[36m (1.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-09"], ["departure_location", "Port Nicolaberg"], ["arrival_location", "Schimmelshire"], ["seat_price", 35.0], ["total_seats", 5], ["available_seats", 1], ["reserved_seats", 1], ["notes", "Neque labore et odio provident veniam distinctio itaque."], ["total_ride_amount", 100.0], ["completed", "f"], ["user_id", 8], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.449752"], ["updated_at", "2017-03-13 15:31:46.449752"]]
+  [1m[35m (0.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-05"], ["departure_location", "Edenview"], ["arrival_location", "Arnoldshire"], ["seat_price", 30.0], ["total_seats", 4], ["available_seats", 3], ["reserved_seats", 2], ["notes", "Officia consequatur tenetur libero placeat doloremque."], ["total_ride_amount", 100.0], ["completed", "t"], ["user_id", 6], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.454037"], ["updated_at", "2017-03-13 15:31:46.454037"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-15"], ["departure_location", "Faheyfort"], ["arrival_location", "Kassulkehaven"], ["seat_price", 30.0], ["total_seats", 5], ["available_seats", 3], ["reserved_seats", 1], ["notes", "Ipsum officiis non vitae illo iste eum."], ["total_ride_amount", 100.0], ["completed", "f"], ["user_id", 3], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.458064"], ["updated_at", "2017-03-13 15:31:46.458064"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-16"], ["departure_location", "Port Lexiechester"], ["arrival_location", "Omaview"], ["seat_price", 35.0], ["total_seats", 5], ["available_seats", 2], ["reserved_seats", 1], ["notes", "In voluptates voluptatem ut quidem."], ["total_ride_amount", 70.0], ["completed", "t"], ["user_id", 14], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.462843"], ["updated_at", "2017-03-13 15:31:46.462843"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-23"], ["departure_location", "North Alexzander"], ["arrival_location", "Alvisfort"], ["seat_price", 20.0], ["total_seats", 4], ["available_seats", 1], ["reserved_seats", 3], ["notes", "Nulla aut provident quibusdam laborum sunt eum et."], ["total_ride_amount", 80.0], ["completed", "f"], ["user_id", 16], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.467426"], ["updated_at", "2017-03-13 15:31:46.467426"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-07"], ["departure_location", "West Bella"], ["arrival_location", "Cruickshankborough"], ["seat_price", 35.0], ["total_seats", 3], ["available_seats", 3], ["reserved_seats", 2], ["notes", "Quasi quia sit rerum velit rerum."], ["total_ride_amount", 100.0], ["completed", "t"], ["user_id", 13], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.471766"], ["updated_at", "2017-03-13 15:31:46.471766"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-17"], ["departure_location", "New Alicia"], ["arrival_location", "New Asia"], ["seat_price", 15.0], ["total_seats", 5], ["available_seats", 2], ["reserved_seats", 3], ["notes", "Suscipit consequatur perferendis et natus aliquam aut aperiam et."], ["total_ride_amount", 100.0], ["completed", "t"], ["user_id", 2], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.476132"], ["updated_at", "2017-03-13 15:31:46.476132"]]
+  [1m[35m (1.2ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-08"], ["departure_location", "Buckridgeton"], ["arrival_location", "Rettabury"], ["seat_price", 35.0], ["total_seats", 3], ["available_seats", 2], ["reserved_seats", 1], ["notes", "Et possimus ad dolore quo."], ["total_ride_amount", 80.0], ["completed", "t"], ["user_id", 3], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.481800"], ["updated_at", "2017-03-13 15:31:46.481800"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-21"], ["departure_location", "North Devin"], ["arrival_location", "Runolfssonmouth"], ["seat_price", 20.0], ["total_seats", 5], ["available_seats", 3], ["reserved_seats", 1], ["notes", "Fugiat laborum molestiae ex reiciendis excepturi."], ["total_ride_amount", 60.0], ["completed", "f"], ["user_id", 20], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.486605"], ["updated_at", "2017-03-13 15:31:46.486605"]]
+  [1m[35m (1.4ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-22"], ["departure_location", "Careyton"], ["arrival_location", "Burniceland"], ["seat_price", 35.0], ["total_seats", 5], ["available_seats", 2], ["reserved_seats", 3], ["notes", "Est qui fugit facere eos quos possimus officia."], ["total_ride_amount", 80.0], ["completed", "t"], ["user_id", 12], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.492670"], ["updated_at", "2017-03-13 15:31:46.492670"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-08"], ["departure_location", "Margretport"], ["arrival_location", "South Cristal"], ["seat_price", 15.0], ["total_seats", 4], ["available_seats", 1], ["reserved_seats", 2], ["notes", "Sequi rerum dolorem eum."], ["total_ride_amount", 60.0], ["completed", "f"], ["user_id", 4], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.497719"], ["updated_at", "2017-03-13 15:31:46.497719"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-13"], ["departure_location", "New Shanel"], ["arrival_location", "East Dovie"], ["seat_price", 15.0], ["total_seats", 4], ["available_seats", 1], ["reserved_seats", 1], ["notes", "Quidem suscipit alias vero in neque sit aut ut."], ["total_ride_amount", 60.0], ["completed", "t"], ["user_id", 3], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.502500"], ["updated_at", "2017-03-13 15:31:46.502500"]]
+  [1m[36m (0.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.6ms)[0m  begin transaction
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-07"], ["departure_location", "Champlinshire"], ["arrival_location", "Shieldsview"], ["seat_price", 30.0], ["total_seats", 5], ["available_seats", 2], ["reserved_seats", 1], ["notes", "Nihil fugiat consequuntur aut distinctio debitis commodi nostrum."], ["total_ride_amount", 100.0], ["completed", "f"], ["user_id", 1], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.507513"], ["updated_at", "2017-03-13 15:31:46.507513"]]
+  [1m[35m (1.1ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-19"], ["departure_location", "New Nikki"], ["arrival_location", "South Yessenia"], ["seat_price", 15.0], ["total_seats", 3], ["available_seats", 2], ["reserved_seats", 1], ["notes", "Dolorum molestias suscipit sapiente optio recusandae expedita tempore."], ["total_ride_amount", 60.0], ["completed", "t"], ["user_id", 20], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.513321"], ["updated_at", "2017-03-13 15:31:46.513321"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-23"], ["departure_location", "South Jaylon"], ["arrival_location", "East Erynfurt"], ["seat_price", 35.0], ["total_seats", 4], ["available_seats", 2], ["reserved_seats", 2], ["notes", "Beatae dignissimos est illum."], ["total_ride_amount", 70.0], ["completed", "t"], ["user_id", 1], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.517747"], ["updated_at", "2017-03-13 15:31:46.517747"]]
+  [1m[35m (1.2ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-09"], ["departure_location", "Kenyontown"], ["arrival_location", "Lenoreland"], ["seat_price", 15.0], ["total_seats", 5], ["available_seats", 2], ["reserved_seats", 2], ["notes", "Blanditiis nobis exercitationem sapiente."], ["total_ride_amount", 80.0], ["completed", "f"], ["user_id", 7], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.523088"], ["updated_at", "2017-03-13 15:31:46.523088"]]
+  [1m[36m (1.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-22"], ["departure_location", "Alycemouth"], ["arrival_location", "Rutherfordton"], ["seat_price", 30.0], ["total_seats", 3], ["available_seats", 1], ["reserved_seats", 3], ["notes", "Veritatis corporis et sunt odio laborum dolorum."], ["total_ride_amount", 60.0], ["completed", "f"], ["user_id", 9], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.528909"], ["updated_at", "2017-03-13 15:31:46.528909"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-17"], ["departure_location", "Champlintown"], ["arrival_location", "Port Noahfurt"], ["seat_price", 30.0], ["total_seats", 3], ["available_seats", 3], ["reserved_seats", 3], ["notes", "Omnis ipsam nobis inventore ipsa enim dolorem."], ["total_ride_amount", 60.0], ["completed", "f"], ["user_id", 13], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.533658"], ["updated_at", "2017-03-13 15:31:46.533658"]]
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-19"], ["departure_location", "Port Shawna"], ["arrival_location", "Johnsonland"], ["seat_price", 35.0], ["total_seats", 5], ["available_seats", 1], ["reserved_seats", 1], ["notes", "Suscipit molestias totam expedita ratione ipsa."], ["total_ride_amount", 100.0], ["completed", "f"], ["user_id", 8], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.538464"], ["updated_at", "2017-03-13 15:31:46.538464"]]
+  [1m[35m (1.7ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-22"], ["departure_location", "North Maida"], ["arrival_location", "Alenaville"], ["seat_price", 15.0], ["total_seats", 4], ["available_seats", 2], ["reserved_seats", 3], ["notes", "Velit qui maxime numquam tempore."], ["total_ride_amount", 70.0], ["completed", "t"], ["user_id", 3], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.543851"], ["updated_at", "2017-03-13 15:31:46.543851"]]
+  [1m[36m (1.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.7ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-12"], ["departure_location", "West Dorthy"], ["arrival_location", "Dennisshire"], ["seat_price", 20.0], ["total_seats", 5], ["available_seats", 3], ["reserved_seats", 1], ["notes", "Eum placeat eum voluptatum pariatur aspernatur consequatur."], ["total_ride_amount", 70.0], ["completed", "f"], ["user_id", 13], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.550594"], ["updated_at", "2017-03-13 15:31:46.550594"]]
+  [1m[35m (1.2ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-20"], ["departure_location", "Legrosstad"], ["arrival_location", "Lowellport"], ["seat_price", 30.0], ["total_seats", 4], ["available_seats", 1], ["reserved_seats", 2], ["notes", "Sit voluptatem dicta id suscipit."], ["total_ride_amount", 70.0], ["completed", "t"], ["user_id", 13], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.557393"], ["updated_at", "2017-03-13 15:31:46.557393"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-08"], ["departure_location", "Emmettborough"], ["arrival_location", "West Herminiaport"], ["seat_price", 20.0], ["total_seats", 3], ["available_seats", 3], ["reserved_seats", 2], ["notes", "Reiciendis quidem harum vitae consequatur fugit esse et soluta."], ["total_ride_amount", 80.0], ["completed", "t"], ["user_id", 15], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.563452"], ["updated_at", "2017-03-13 15:31:46.563452"]]
+  [1m[35m (0.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  [["ride_date", "2017-03-14"], ["departure_location", "South Jalonburgh"], ["arrival_location", "Claudstad"], ["seat_price", 20.0], ["total_seats", 5], ["available_seats", 1], ["reserved_seats", 3], ["notes", "Non et assumenda cumque illum voluptas."], ["total_ride_amount", 60.0], ["completed", "f"], ["user_id", 13], ["booked", "f"], ["created_at", "2017-03-13 15:31:46.567777"], ["updated_at", "2017-03-13 15:31:46.567777"]]
+  [1m[36m (0.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "rides" ("ride_date", "departure_location", "arrival_location", "seat_price", "total_seats", "available_seats", "reserved_seats", "notes", "total_ride_amount", "completed", "user_id", "booked", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["ride_date", "2017-03-09"], ["departure_location", "Louveniaview"], ["arrival_location", "New Lavernemouth"], ["seat_price", 30.0], ["total_seats", 4], ["available_seats", 2], ["reserved_seats", 1], ["notes", "Nam non animi necessitatibus deleniti omnis."], ["total_ride_amount", 100.0], ["completed", "t"], ["user_id", 8], ["booked", "t"], ["created_at", "2017-03-13 15:31:46.572713"], ["updated_at", "2017-03-13 15:31:46.572713"]]
+  [1m[35m (0.9ms)[0m  commit transaction
+  [1m[36mRide Load (0.3ms)[0m  [1mSELECT "rides".* FROM "rides"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["user_id", 18], ["ride_id", 26], ["total_payment", 60.0], ["rider_number", 2], ["created_at", "2017-03-13 15:31:46.588553"], ["updated_at", "2017-03-13 15:31:46.588553"]]
+  [1m[35m (1.4ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["user_id", 6], ["ride_id", 19], ["total_payment", 70.0], ["rider_number", 1], ["created_at", "2017-03-13 15:31:46.593941"], ["updated_at", "2017-03-13 15:31:46.593941"]]
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["user_id", 13], ["ride_id", 21], ["total_payment", 70.0], ["rider_number", 2], ["created_at", "2017-03-13 15:31:46.597930"], ["updated_at", "2017-03-13 15:31:46.597930"]]
+  [1m[35m (1.3ms)[0m  commit transaction
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["user_id", 4], ["ride_id", 25], ["total_payment", 100.0], ["rider_number", 3], ["created_at", "2017-03-13 15:31:46.602467"], ["updated_at", "2017-03-13 15:31:46.602467"]]
+  [1m[36m (1.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["user_id", 19], ["ride_id", 27], ["total_payment", 100.0], ["rider_number", 3], ["created_at", "2017-03-13 15:31:46.606309"], ["updated_at", "2017-03-13 15:31:46.606309"]]
+  [1m[35m (1.2ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  INSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["user_id", 10], ["ride_id", 12], ["total_payment", 80.0], ["rider_number", 2], ["created_at", "2017-03-13 15:31:46.610935"], ["updated_at", "2017-03-13 15:31:46.610935"]]
+  [1m[36m (1.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["user_id", 17], ["ride_id", 15], ["total_payment", 80.0], ["rider_number", 1], ["created_at", "2017-03-13 15:31:46.616200"], ["updated_at", "2017-03-13 15:31:46.616200"]]
+  [1m[35m (0.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  INSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["user_id", 14], ["ride_id", 25], ["total_payment", 100.0], ["rider_number", 2], ["created_at", "2017-03-13 15:31:46.620133"], ["updated_at", "2017-03-13 15:31:46.620133"]]
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["user_id", 16], ["ride_id", 30], ["total_payment", 60.0], ["rider_number", 2], ["created_at", "2017-03-13 15:31:46.627430"], ["updated_at", "2017-03-13 15:31:46.627430"]]
+  [1m[35m (0.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["user_id", 1], ["ride_id", 22], ["total_payment", 70.0], ["rider_number", 3], ["created_at", "2017-03-13 15:31:46.630925"], ["updated_at", "2017-03-13 15:31:46.630925"]]
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["user_id", 2], ["ride_id", 6], ["total_payment", 60.0], ["rider_number", 1], ["created_at", "2017-03-13 15:31:46.634549"], ["updated_at", "2017-03-13 15:31:46.634549"]]
+  [1m[35m (0.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["user_id", 4], ["ride_id", 9], ["total_payment", 100.0], ["rider_number", 2], ["created_at", "2017-03-13 15:31:46.639829"], ["updated_at", "2017-03-13 15:31:46.639829"]]
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["user_id", 3], ["ride_id", 17], ["total_payment", 60.0], ["rider_number", 2], ["created_at", "2017-03-13 15:31:46.643742"], ["updated_at", "2017-03-13 15:31:46.643742"]]
+  [1m[35m (1.2ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["user_id", 1], ["ride_id", 13], ["total_payment", 80.0], ["rider_number", 3], ["created_at", "2017-03-13 15:31:46.647394"], ["updated_at", "2017-03-13 15:31:46.647394"]]
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "carpools" ("user_id", "ride_id", "total_payment", "rider_number", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["user_id", 20], ["ride_id", 11], ["total_payment", 80.0], ["rider_number", 3], ["created_at", "2017-03-13 15:31:46.650924"], ["updated_at", "2017-03-13 15:31:46.650924"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36mCarpool Load (0.3ms)[0m  [1mSELECT "carpools".* FROM "carpools"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["content", "Rerum dolorem nam enim earum molestiae vel."], ["sent_at", "2017-03-13 20:13:06.000000"], ["user_id", 12], ["carpool_id", 8], ["created_at", "2017-03-13 15:31:46.667911"], ["updated_at", "2017-03-13 15:31:46.667911"]]
+  [1m[35m (1.1ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["content", "Nihil quia tempora saepe illum."], ["sent_at", "2017-03-11 20:12:26.000000"], ["user_id", 8], ["carpool_id", 15], ["created_at", "2017-03-13 15:31:46.673320"], ["updated_at", "2017-03-13 15:31:46.673320"]]
+  [1m[36m (1.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.7ms)[0m  [1mINSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["content", "Ut sunt nemo quisquam sit eaque enim."], ["sent_at", "2017-03-11 06:48:25.000000"], ["user_id", 8], ["carpool_id", 13], ["created_at", "2017-03-13 15:31:46.678618"], ["updated_at", "2017-03-13 15:31:46.678618"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["content", "Labore enim id fuga est blanditiis ipsum ut officiis."], ["sent_at", "2017-03-13 13:14:30.000000"], ["user_id", 15], ["carpool_id", 10], ["created_at", "2017-03-13 15:31:46.683809"], ["updated_at", "2017-03-13 15:31:46.683809"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["content", "Dolores id et non et."], ["sent_at", "2017-03-12 11:39:34.000000"], ["user_id", 12], ["carpool_id", 3], ["created_at", "2017-03-13 15:31:46.688900"], ["updated_at", "2017-03-13 15:31:46.688900"]]
+  [1m[35m (2.1ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["content", "Et magni sapiente dolore mollitia accusamus repellat id assumenda."], ["sent_at", "2017-03-12 12:26:55.000000"], ["user_id", 5], ["carpool_id", 3], ["created_at", "2017-03-13 15:31:46.699201"], ["updated_at", "2017-03-13 15:31:46.699201"]]
+  [1m[36m (0.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["content", "Cum eveniet voluptatum omnis quia rerum voluptas vel."], ["sent_at", "2017-03-11 19:45:06.000000"], ["user_id", 5], ["carpool_id", 4], ["created_at", "2017-03-13 15:31:46.702739"], ["updated_at", "2017-03-13 15:31:46.702739"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["content", "Rerum doloremque et libero velit ipsa."], ["sent_at", "2017-03-13 10:11:10.000000"], ["user_id", 1], ["carpool_id", 12], ["created_at", "2017-03-13 15:31:46.707302"], ["updated_at", "2017-03-13 15:31:46.707302"]]
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (2.0ms)[0m  [1mINSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["content", "Excepturi est quia ea sapiente similique."], ["sent_at", "2017-03-14 01:26:21.000000"], ["user_id", 4], ["carpool_id", 4], ["created_at", "2017-03-13 15:31:46.711182"], ["updated_at", "2017-03-13 15:31:46.711182"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["content", "Ipsa et aut maiores sapiente aliquam et."], ["sent_at", "2017-03-12 02:58:18.000000"], ["user_id", 1], ["carpool_id", 14], ["created_at", "2017-03-13 15:31:46.717306"], ["updated_at", "2017-03-13 15:31:46.717306"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["content", "Ducimus inventore unde occaecati et."], ["sent_at", "2017-03-12 07:49:49.000000"], ["user_id", 15], ["carpool_id", 14], ["created_at", "2017-03-13 15:31:46.720980"], ["updated_at", "2017-03-13 15:31:46.720980"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["content", "Odio ea ipsa aspernatur impedit accusantium magnam libero distinctio."], ["sent_at", "2017-03-12 00:33:20.000000"], ["user_id", 11], ["carpool_id", 3], ["created_at", "2017-03-13 15:31:46.724640"], ["updated_at", "2017-03-13 15:31:46.724640"]]
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["content", "Eligendi voluptatem ullam voluptas ut quia repudiandae."], ["sent_at", "2017-03-12 04:29:40.000000"], ["user_id", 15], ["carpool_id", 12], ["created_at", "2017-03-13 15:31:46.728089"], ["updated_at", "2017-03-13 15:31:46.728089"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["content", "Molestiae totam delectus hic et doloremque."], ["sent_at", "2017-03-14 03:50:29.000000"], ["user_id", 7], ["carpool_id", 1], ["created_at", "2017-03-13 15:31:46.732456"], ["updated_at", "2017-03-13 15:31:46.732456"]]
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["content", "Ratione molestiae ipsam natus rerum optio amet dolorem."], ["sent_at", "2017-03-13 18:20:16.000000"], ["user_id", 6], ["carpool_id", 7], ["created_at", "2017-03-13 15:31:46.736891"], ["updated_at", "2017-03-13 15:31:46.736891"]]
+  [1m[35m (0.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["content", "Neque perspiciatis maiores sapiente."], ["sent_at", "2017-03-13 20:22:14.000000"], ["user_id", 13], ["carpool_id", 6], ["created_at", "2017-03-13 15:31:46.741404"], ["updated_at", "2017-03-13 15:31:46.741404"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["content", "Dolorem voluptates enim qui."], ["sent_at", "2017-03-12 10:56:01.000000"], ["user_id", 5], ["carpool_id", 11], ["created_at", "2017-03-13 15:31:46.745782"], ["updated_at", "2017-03-13 15:31:46.745782"]]
+  [1m[35m (0.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["content", "Velit nulla qui suscipit et sit blanditiis."], ["sent_at", "2017-03-12 07:25:51.000000"], ["user_id", 5], ["carpool_id", 4], ["created_at", "2017-03-13 15:31:46.750858"], ["updated_at", "2017-03-13 15:31:46.750858"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["content", "Est similique voluptatum et eos."], ["sent_at", "2017-03-12 08:47:26.000000"], ["user_id", 14], ["carpool_id", 15], ["created_at", "2017-03-13 15:31:46.755131"], ["updated_at", "2017-03-13 15:31:46.755131"]]
+  [1m[35m (1.2ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "messages" ("content", "sent_at", "user_id", "carpool_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)  [["content", "Delectus minus cupiditate mollitia deleniti molestiae."], ["sent_at", "2017-03-12 14:19:28.000000"], ["user_id", 9], ["carpool_id", 10], ["created_at", "2017-03-13 15:31:46.759702"], ["updated_at", "2017-03-13 15:31:46.759702"]]
+  [1m[36m (1.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "ratings" ("rating_value", "rating_comment", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["rating_value", 5], ["rating_comment", "Ipsum quaerat voluptate quam velit dolorem voluptatem."], ["user_id", 4], ["created_at", "2017-03-13 15:31:46.778321"], ["updated_at", "2017-03-13 15:31:46.778321"]]
+  [1m[35m (1.5ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "ratings" ("rating_value", "rating_comment", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["rating_value", 4], ["rating_comment", "Veniam id alias et consequuntur ab."], ["user_id", 14], ["created_at", "2017-03-13 15:31:46.784212"], ["updated_at", "2017-03-13 15:31:46.784212"]]
+  [1m[36m (1.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "ratings" ("rating_value", "rating_comment", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["rating_value", 4], ["rating_comment", "Repellendus quia et voluptatum."], ["user_id", 13], ["created_at", "2017-03-13 15:31:46.788026"], ["updated_at", "2017-03-13 15:31:46.788026"]]
+  [1m[35m (0.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "ratings" ("rating_value", "rating_comment", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["rating_value", 5], ["rating_comment", "Quia in et sit."], ["user_id", 14], ["created_at", "2017-03-13 15:31:46.790877"], ["updated_at", "2017-03-13 15:31:46.790877"]]
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "ratings" ("rating_value", "rating_comment", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["rating_value", 5], ["rating_comment", "Minus fugit soluta dolores dicta ipsam."], ["user_id", 8], ["created_at", "2017-03-13 15:31:46.794218"], ["updated_at", "2017-03-13 15:31:46.794218"]]
+  [1m[35m (0.8ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "ratings" ("rating_value", "rating_comment", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["rating_value", 3], ["rating_comment", "Sunt fuga animi ut consequatur est necessitatibus aut."], ["user_id", 2], ["created_at", "2017-03-13 15:31:46.797480"], ["updated_at", "2017-03-13 15:31:46.797480"]]
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "ratings" ("rating_value", "rating_comment", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["rating_value", 5], ["rating_comment", "Quia est libero voluptas quo sit laboriosam minima."], ["user_id", 12], ["created_at", "2017-03-13 15:31:46.800136"], ["updated_at", "2017-03-13 15:31:46.800136"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "ratings" ("rating_value", "rating_comment", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["rating_value", 3], ["rating_comment", "Minima voluptatem cum facilis fugit omnis repellat ut."], ["user_id", 6], ["created_at", "2017-03-13 15:31:46.803821"], ["updated_at", "2017-03-13 15:31:46.803821"]]
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "ratings" ("rating_value", "rating_comment", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["rating_value", 3], ["rating_comment", "Unde molestiae et ratione sit optio nostrum numquam doloremque."], ["user_id", 3], ["created_at", "2017-03-13 15:31:46.807886"], ["updated_at", "2017-03-13 15:31:46.807886"]]
+  [1m[35m (0.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "ratings" ("rating_value", "rating_comment", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["rating_value", 4], ["rating_comment", "Eaque voluptas impedit itaque aut est dolor non."], ["user_id", 1], ["created_at", "2017-03-13 15:31:46.811400"], ["updated_at", "2017-03-13 15:31:46.811400"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "disbursements" ("stripe_disbursement_id", "user_id", "disbursed_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["stripe_disbursement_id", 0], ["user_id", 5], ["disbursed_at", "2017-03-10 00:00:00.000000"], ["created_at", "2017-03-13 15:31:46.834403"], ["updated_at", "2017-03-13 15:31:46.834403"]]
+  [1m[35m (0.7ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "disbursements" ("stripe_disbursement_id", "user_id", "disbursed_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["stripe_disbursement_id", 1], ["user_id", 15], ["disbursed_at", "2017-03-18 00:00:00.000000"], ["created_at", "2017-03-13 15:31:46.839914"], ["updated_at", "2017-03-13 15:31:46.839914"]]
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "disbursements" ("stripe_disbursement_id", "user_id", "disbursed_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["stripe_disbursement_id", 2], ["user_id", 17], ["disbursed_at", "2017-03-14 00:00:00.000000"], ["created_at", "2017-03-13 15:31:46.843354"], ["updated_at", "2017-03-13 15:31:46.843354"]]
+  [1m[35m (1.3ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "disbursements" ("stripe_disbursement_id", "user_id", "disbursed_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["stripe_disbursement_id", 0], ["user_id", 20], ["disbursed_at", "2017-03-05 00:00:00.000000"], ["created_at", "2017-03-13 15:31:46.847533"], ["updated_at", "2017-03-13 15:31:46.847533"]]
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "disbursements" ("stripe_disbursement_id", "user_id", "disbursed_at", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["stripe_disbursement_id", 9], ["user_id", 10], ["disbursed_at", "2017-03-10 00:00:00.000000"], ["created_at", "2017-03-13 15:31:46.851080"], ["updated_at", "2017-03-13 15:31:46.851080"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36mDisbursement Load (0.2ms)[0m  [1mSELECT "disbursements".* FROM "disbursements"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["carpool_id", 12], ["user_id", 12], ["paid_at", "2017-03-08 00:00:00.000000"], ["stripe_id", 0], ["disbursement_id", 1], ["payment_amount", 35.0], ["created_at", "2017-03-13 15:31:46.868267"], ["updated_at", "2017-03-13 15:31:46.868267"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  [["carpool_id", 11], ["user_id", 7], ["paid_at", "2017-03-16 00:00:00.000000"], ["stripe_id", 0], ["disbursement_id", 4], ["payment_amount", 20.0], ["created_at", "2017-03-13 15:31:46.872582"], ["updated_at", "2017-03-13 15:31:46.872582"]]
+  [1m[36m (1.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["carpool_id", 8], ["user_id", 16], ["paid_at", "2017-03-15 00:00:00.000000"], ["stripe_id", 9], ["disbursement_id", 1], ["payment_amount", 20.0], ["created_at", "2017-03-13 15:31:46.877912"], ["updated_at", "2017-03-13 15:31:46.877912"]]
+  [1m[35m (1.1ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  [["carpool_id", 7], ["user_id", 8], ["paid_at", "2017-03-21 00:00:00.000000"], ["stripe_id", 0], ["disbursement_id", 3], ["payment_amount", 15.0], ["created_at", "2017-03-13 15:31:46.882871"], ["updated_at", "2017-03-13 15:31:46.882871"]]
+  [1m[36m (1.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["carpool_id", 7], ["user_id", 5], ["paid_at", "2017-03-15 00:00:00.000000"], ["stripe_id", 0], ["disbursement_id", 5], ["payment_amount", 35.0], ["created_at", "2017-03-13 15:31:46.888173"], ["updated_at", "2017-03-13 15:31:46.888173"]]
+  [1m[35m (2.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  [["carpool_id", 11], ["user_id", 5], ["paid_at", "2017-03-05 00:00:00.000000"], ["stripe_id", 8], ["disbursement_id", 1], ["payment_amount", 30.0], ["created_at", "2017-03-13 15:31:46.895616"], ["updated_at", "2017-03-13 15:31:46.895616"]]
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["carpool_id", 12], ["user_id", 3], ["paid_at", "2017-03-15 00:00:00.000000"], ["stripe_id", 2], ["disbursement_id", 2], ["payment_amount", 35.0], ["created_at", "2017-03-13 15:31:46.900762"], ["updated_at", "2017-03-13 15:31:46.900762"]]
+  [1m[35m (0.9ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  [["carpool_id", 7], ["user_id", 3], ["paid_at", "2017-03-06 00:00:00.000000"], ["stripe_id", 0], ["disbursement_id", 5], ["payment_amount", 20.0], ["created_at", "2017-03-13 15:31:46.904837"], ["updated_at", "2017-03-13 15:31:46.904837"]]
+  [1m[36m (2.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["carpool_id", 14], ["user_id", 9], ["paid_at", "2017-03-09 00:00:00.000000"], ["stripe_id", 0], ["disbursement_id", 5], ["payment_amount", 30.0], ["created_at", "2017-03-13 15:31:46.910455"], ["updated_at", "2017-03-13 15:31:46.910455"]]
+  [1m[35m (1.1ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  [["carpool_id", 7], ["user_id", 1], ["paid_at", "2017-03-15 00:00:00.000000"], ["stripe_id", 0], ["disbursement_id", 4], ["payment_amount", 30.0], ["created_at", "2017-03-13 15:31:46.914062"], ["updated_at", "2017-03-13 15:31:46.914062"]]
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["carpool_id", 5], ["user_id", 4], ["paid_at", "2017-03-12 00:00:00.000000"], ["stripe_id", 0], ["disbursement_id", 4], ["payment_amount", 20.0], ["created_at", "2017-03-13 15:31:46.918262"], ["updated_at", "2017-03-13 15:31:46.918262"]]
+  [1m[35m (1.0ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  [["carpool_id", 3], ["user_id", 4], ["paid_at", "2017-03-20 00:00:00.000000"], ["stripe_id", 0], ["disbursement_id", 5], ["payment_amount", 35.0], ["created_at", "2017-03-13 15:31:46.922352"], ["updated_at", "2017-03-13 15:31:46.922352"]]
+  [1m[36m (1.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["carpool_id", 14], ["user_id", 2], ["paid_at", "2017-03-19 00:00:00.000000"], ["stripe_id", 0], ["disbursement_id", 2], ["payment_amount", 20.0], ["created_at", "2017-03-13 15:31:46.927482"], ["updated_at", "2017-03-13 15:31:46.927482"]]
+  [1m[35m (1.1ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  [["carpool_id", 15], ["user_id", 10], ["paid_at", "2017-03-03 00:00:00.000000"], ["stripe_id", 0], ["disbursement_id", 4], ["payment_amount", 15.0], ["created_at", "2017-03-13 15:31:46.931674"], ["updated_at", "2017-03-13 15:31:46.931674"]]
+  [1m[36m (1.2ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "payments" ("carpool_id", "user_id", "paid_at", "stripe_id", "disbursement_id", "payment_amount", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["carpool_id", 9], ["user_id", 8], ["paid_at", "2017-03-16 00:00:00.000000"], ["stripe_id", 737], ["disbursement_id", 3], ["payment_amount", 15.0], ["created_at", "2017-03-13 15:31:46.936424"], ["updated_at", "2017-03-13 15:31:46.936424"]]
+  [1m[35m (1.2ms)[0m  commit transaction
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "users"[0m
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "rides"
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "carpools"[0m
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "messages"
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "ratings"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "payments"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "disbursements"[0m
+  [1m[36mCarpool Load (0.7ms)[0m  [1mSELECT  "carpools".* FROM "carpools"  ORDER BY "carpools"."id" ASC LIMIT 1[0m
+  [1m[35mCarpool Load (0.4ms)[0m  SELECT  "carpools".* FROM "carpools"  ORDER BY "carpools"."id" ASC LIMIT 1
+  [1m[36mUser Load (0.9ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1[0m  [["id", 18]]
+  [1m[36mRating Load (0.9ms)[0m  [1mSELECT  "ratings".* FROM "ratings"  ORDER BY "ratings"."id" ASC LIMIT 1[0m

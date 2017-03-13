@@ -11,10 +11,10 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
    root 'welcome#index'
     
-    resources :rides, only: [:index, :show, :new, :create, :update] do
-        resources :carpools, only: [:show] do
-            resources :messages, only: [:index, :new, :create]
-        end
+    resources :rides, only: [:index, :show, :new, :create, :edit, :update]
+    
+    resources :carpools, only: [] do
+        resources :messages, only: [:index, :new, :create]
     end
     
 

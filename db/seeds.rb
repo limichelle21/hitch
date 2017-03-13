@@ -55,8 +55,8 @@ rides = Ride.all
 
 15.times do
     Carpool.create!(
-        user_id: users.sample.id,
-        ride_id: rides.sample.id,
+        user: users.sample,
+        ride: rides.sample,
         total_payment: RandomData.random_total_amount,
         rider_number: RandomData.random_reserved_seats
         )

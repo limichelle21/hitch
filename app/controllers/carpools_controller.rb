@@ -10,4 +10,8 @@ class CarpoolsController < ApplicationController
       # if ride_id matches the ride_id of exisiting carpool_id, add user to carpool, retrieve new carpool amount from ride total
   end
     
+  def delete
+      # when a carpool is cancelled
+  end
+    
 end

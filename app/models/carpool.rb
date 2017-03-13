@@ -8,9 +8,4 @@ class Carpool < ActiveRecord::Base
     validates :ride, presence: true
     
     
-
-    
-    
-    
-    
 end

@@ -8,7 +8,7 @@ FactoryGirl.define do
     verified              true
     average_rating        "4"
     payment_card_token    "123456789"
-    bank_accont_token     "987654321"
+    bank_account_token     "987654321"
     card_type             "Visa"
     last_4                "5678"
       
