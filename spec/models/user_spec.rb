@@ -23,11 +23,11 @@ RSpec.describe User, type: :model do
             @ratings.each do |r|
                 create :rating, user: user, rating_value: r
             end
+            user.reload
         end
         
-        describe "#avg_rating" do
+        describe "#calculate_rating" do
             it "calculates the average rating for a user" do
-                raise user.ratings.inspect
                 expect(user.average_rating).to eq(4)
             end
         end

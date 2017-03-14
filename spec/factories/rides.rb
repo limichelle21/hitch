@@ -2,7 +2,7 @@ include RandomData
 
 FactoryGirl.define do
   factory :ride do
-    ride_date { 1.day.ago }
+    ride_date { 5.days.ago }
     departure_location "San Francisco"
     arrival_location "Los Angeles"
     seat_price RandomData.random_seat_price

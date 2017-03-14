@@ -13,10 +13,14 @@ class User < ActiveRecord::Base
 
 
     # takes average of all ratings associated with a user
-    def average_rating
-        raise ratings.inspect
-        avg_rating = ratings.sum(:rating_value) / ratings.count
+    def calculate_rating
+        if ratings.present?
+            avg_rating = ratings.sum(:rating_value) / ratings.count
+        else 
+            avg_rating = 5
+        end
         update_attribute(:average_rating, avg_rating)
+        average_rating
     end
 
 
