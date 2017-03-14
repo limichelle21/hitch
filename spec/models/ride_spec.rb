@@ -17,17 +17,21 @@ RSpec.describe Ride, type: :model do
     
     describe "saving carpool information to rides" do
         before do
-            @carpools = [1, 1, 1]
+            @carpools = [1, 2, 1]
             @carpools.each do |c|
-                create :carpool, user: user, ride: ride, total_payment: 20, rider_number: c
+                create :carpool, user: user, ride: ride, rider_number: c, total_payment: (ride.seat_price * c)
             end
+            ride.reserved_seats = @carpools.sum(:rider_number)
+            ride.available_seats = ride.total_seats - ride.reserved_seats
+            
+            
             ride.reload
         end
         
         describe "#update_reserved_seats" do
             it "updates the reserved_seats attribute" do
                 @reserved_seats = ride.carpools.sum(:rider_number)
-                expect(ride.reserved_seats).to eq(@reserved_seats)
+                expect(ride.update_reserved_seats).to eq(@reserved_seats)
             end
         end
         
@@ -41,24 +45,27 @@ RSpec.describe Ride, type: :model do
 
             it "updates total ride amount" do 
                 @total = ride.carpools.sum(:total_payment)
-                expect(ride.total_ride_amount).to eq(@total)
+                expect(ride.update_amount).to eq(@total)
             end
         end 
-    end
-    
-    
-    describe "#seats_left" do
         
-        it "returns the correct number of seats left" do
-            expect(ride.available_seats).to eq(@available_seats)
+        describe "#seats_left" do
+            it "returns the correct number of seats left" do
+  
+                @available = ride.available_seats
+                expect(ride.seats_left).to eq(@available_seats)
+            end
         end
+        
     end
+    
+    
+    
     
     describe "#ride_completed" do
-
         it "should mark a past ride complete" do
             @current_date = "Mon, 13 Mar 2017"
-            expect(ride.completed).to eq(true)
+            expect(ride.completed?).to eq(true)
         end
     end
 

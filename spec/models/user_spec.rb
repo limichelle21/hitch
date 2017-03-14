@@ -28,7 +28,7 @@ RSpec.describe User, type: :model do
         
         describe "#calculate_rating" do
             it "calculates the average rating for a user" do
-                expect(user.average_rating).to eq(4)
+                expect(user.calculate_rating).to eq(4)
             end
         end
         

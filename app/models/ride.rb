@@ -20,14 +20,14 @@ class Ride < ActiveRecord::Base
     # Update reserved seats attributte
     def update_reserved_seats
         reserved = carpools.sum(:rider_number)
-        self.update_attribute(:reserved_seats, reserved)
+        update_attribute(:reserved_seats, reserved)
         reserved_seats
     end
     
     
     # Calculate the number of available seats
     def seats_left
-        available_seats = total_seats - reserved_seats
+        available_seats = [total_seats - reserved_seats, 0].max
     end
 
     # Calculate the running total of total_ride_amount based on number of Carpools
@@ -48,7 +48,7 @@ class Ride < ActiveRecord::Base
         
     # compare ride_date with current_date - check every day
     # if ride_date > current_date, marke ride.completed as TRUE
-    def ride_completed?
+    def completed?
         @current_date = Time.now
         ride_date > @current_date ? update_attribute(:completed, true) : update_attribute(:completed, false)     
     end
