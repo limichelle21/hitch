@@ -53,7 +53,7 @@ RSpec.describe Ride, type: :model do
             it "returns the correct number of seats left" do
   
                 @available = ride.available_seats
-                expect(ride.seats_left).to eq(@available_seats)
+                expect(ride.seats_left).to eq(@available)
             end
         end
         
