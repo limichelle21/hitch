@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     
     resources :rides, only: [:index, :show, :new, :create, :edit, :update]
     
-    resources :carpools, only: [] do
+    resources :carpools, only: [:new, :create] do
         resources :messages, only: [:index, :new, :create]
     end
     

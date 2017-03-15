@@ -1,17 +1,45 @@
 class CarpoolsController < ApplicationController
-  def new
-  end
 
-  def create
-      # when first ride is booked, create new instance of carpool
-  end
+    before_action :get_ride
+    before_action :get_user
     
-  def update
-      # if ride_id matches the ride_id of exisiting carpool_id, add user to carpool, retrieve new carpool amount from ride total
-  end
     
-  def delete
-      # when a carpool is cancelled
-  end
+    def new
+      @carpool = Carpool.new
+    end
+
+
+    # how to save an instance of carpool to both ride and user?    
+
+    def create
+      @carpool = Carpool.new
+      @carpool = @ride.build(carpool_params)    
+
+       if @carpool.save
+          CarpoolMailer.book_ride_email(@ride.user, @ride, @carpool)
+          CarpoolMailer.confirm_ride_email(@user, @ride, @carpool)   
+          redirect_to carpool_messages_path
+        else
+          flash[:notice] = "There was an error saving your ride."
+          render :new
+      end
+    end
+    
+    
+    
+    private
+
+     def carpool_params
+        params.require(:carpool).permit(:user, :rider_number, :total_payment)
+    end
+
+
+    def get_ride
+        @ride = Ride.find(params[:id])
+    end
+    
+    def get_user
+        @user = current_user
+    end
     
 end

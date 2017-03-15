@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hello, <%= @user.username %>!</h1>
+    <p>
+      You have a new rider for your trip to <%= @ride.arrival_location %> <br>
+    </p>
+    <p>Reservation ID: <%= @carpool.id %> </p>
+    <p>
+      Here are the details of your journey:<br>
+        <br>
+        Passenger: <%= @carpool.user %><br>
+        Seats Reserved: <%= @carpool.rider_number %><br>
+        Ride Date: <%= @ride.ride_date %><br>
+        Leaving From: <%= @ride.departure_location %><br>
+        Going To: <%= @ride.arrival_location %><br>
+        Seat Price: <%= @ride.seat_price %><br>
+    </p>
+    <p>You will receive a credit to your account when this ride has been completed.</p>
+   
+    <p>To send a message to your rider, just follow this link: <%= @url %></p>
+  </body>
+</html>
