@@ -1,0 +1,14 @@
+Hello, <%= @user.username.capitalize %>! Your disbursement has been processed. 
+
+===============================================
+
+Here are the rides included: 
+        
+<% @user.carpools.each do |c| %>
+    Ride Date: <%= c.ride.ride_date %>
+    Carpool ID: <%= c.id %>
+    Carpool Payment: $<%= c.total_payment %>
+
+<% end %>    
+
+For any questions, please email the Hitch team at hitch-support@example.com.

@@ -6,7 +6,7 @@ class CarpoolMailer < ApplicationMailer
         @ride = ride
         @user = user
         @carpool = carpool
-        @url = 'http://hitch.com/carpools/"#{@carpool.id}/messages/new'
+        @url = 'http://hitch.com/carpools/#{@carpool.id}/messages/new'
         mail(to: @user.email, subject: 'Hitch - New Passenger Added')
     end
 
@@ -15,6 +15,7 @@ class CarpoolMailer < ApplicationMailer
         @ride = ride
         @carpool = carpool
         @user = user
+        @url = 'http://hitch.com/carpools/#{@carpool.id}/messages/new'
         mail(to: @user.email, subject: 'Hitch - Ride Confirmed')
         # send email to passenger with confirmation/Payment ID
     end

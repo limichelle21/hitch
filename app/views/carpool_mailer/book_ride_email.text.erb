@@ -1,17 +1,17 @@
 
-Hello, <%= @user.username %>! You have a new rider for your trip to <%= @ride.arrival_location %>
+Hello, <%= @user.username.capitalize %>! You have a new rider for your trip to <%= @ride.arrival_location %>
 ===============================================
 
 Reservation ID: <%= @carpool.id %>
  
 Here are the details of your journey:
         
-Passenger: <%= @carpool.user %>
+Passenger: <%= @carpool.user.username.capitalize %>
 Seats Reserved: <%= @carpool.rider_number %>
 Ride Date: <%= @ride.ride_date %>
 Leaving From: <%= @ride.departure_location %>
 Going To: <%= @ride.arrival_location %>
-Seat Price: <%= @ride.seat_price %>
+Seat Price: $<%= @ride.seat_price %>
     
 You will receive a credit to your account when this ride has been completed.
 

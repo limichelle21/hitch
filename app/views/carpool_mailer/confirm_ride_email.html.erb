@@ -5,7 +5,7 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Hello, <%= @user.username %>!</h1>
+    <h1>Hello, <%= @carpool.user.username.capitalize %>!</h1>
     <p>
       Your trip to <%= @ride.arrival_location %> has been confirmed. <br>
     </p>
@@ -13,12 +13,12 @@
     <p>
       Here are the details of your journey:<br>
         <br>
-        Passenger: <%= @carpool.user %><br>
+        Driver: <%= @user.username.capitalize %><br>
         Seats Reserved: <%= @carpool.rider_number %><br>
         Ride Date: <%= @ride.ride_date %><br>
         Leaving From: <%= @ride.departure_location %><br>
         Going To: <%= @ride.arrival_location %><br>
-        Seat Price: <%= @ride.seat_price %><br>
+        Seat Price: $<%= @ride.seat_price %><br>
         Total Payment: <%= @carpool.total_payment %><br> 
     </p>
       

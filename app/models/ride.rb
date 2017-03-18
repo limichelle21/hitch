@@ -53,6 +53,11 @@ class Ride < ActiveRecord::Base
         ride_date > @current_date ? update_attribute(:completed, true) : update_attribute(:completed, false)     
     end
     
+    def request_rating
+        # if ride is completed, send email requesting driver and passenger to rate
+        # how to save email responses to DB?
+    end
+    
     def driver_payment
         # store ride total in Driver's account?
     end

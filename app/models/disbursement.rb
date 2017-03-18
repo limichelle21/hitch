@@ -10,10 +10,6 @@ class Disbursement < ActiveRecord::Base
         # disburse amount to driver upon request
     end
     
-    def email_driver
-        # email driver indicating disbursement went through
-    end
-    
     
     # Cancellations/returns
     

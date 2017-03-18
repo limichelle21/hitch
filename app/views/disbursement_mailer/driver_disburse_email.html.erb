@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hello, <%= @user.username.capitalize %>!</h1>
+    <p>
+      Your disbursement has been processed. Here are the rides included: <br>
+    </p>
+
+    <p>
+        <br>
+        
+        <% @user.carpools.each do |c| %><br>
+            Ride Date: <%= c.ride.ride_date %><br>
+            Carpool ID: <%= c.id %><br>
+            Carpool Payment: $<%= c.total_payment %><br>
+            <br>
+        <% end%>
+ 
+    </p>
+    <p>For any questions, please email the Hitch team at hitch-support@example.com.</p>
+
+  </body>
+</html>

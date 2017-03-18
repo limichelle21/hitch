@@ -1,17 +1,17 @@
 
-Hello, <%= @user.username %>! Your trip to <%= @ride.arrival_location %> has been confirmed.
+Hello, <%= @carpool.user.username.capitalize %>! Your trip to <%= @ride.arrival_location %> has been confirmed.
 ===============================================
  
 Reservation ID: <%= @carpool.id %>
 
 Here are the details of your journey:
         
-Passenger: <%= @carpool.user %>
+Driver: <%= @user.username.capitalize %>
 Seats Reserved: <%= @carpool.rider_number %>
 Ride Date: <%= @ride.ride_date %>
 Leaving From: <%= @ride.departure_location %>
 Going To: <%= @ride.arrival_location %>
-Seat Price: <%= @ride.seat_price %>
+Seat Price: $<%= @ride.seat_price %>
 Total Payment: <%= @carpool.total_payment %>    
 
 To send a message to your driver, just follow this link: <%= @url %>
