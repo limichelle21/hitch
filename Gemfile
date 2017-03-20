@@ -26,12 +26,20 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Devise for user authentication
 gem 'devise'
 
+# OmniAuth Providers
+gem 'omniauth'
+gem 'omniauth-google-oauth2', '~> 0.2.1'
+gem 'omniauth-facebook'
+
 # Include Bootstrap
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+
+# Use Figaro gem to encrypt secret keys
+gem 'figaro'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
