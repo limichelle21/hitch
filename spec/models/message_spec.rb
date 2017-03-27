@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Message, type: :model do
     let(:user) { create(:user) }
     let(:carpool) { create(:carpool) }
-    let(:message) { create(:message, user: user) }
+    let(:message) { create(:message, user: user, carpool: carpool) }
     
     it { should belong_to(:user) }
     it { should belong_to(:carpool) }

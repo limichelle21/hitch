@@ -6,6 +6,9 @@ module RandomData
         [true, false].sample
     end
 
+    def self.paragraph
+        "Hey, can we change the pick up time?"
+    end
     
 # User Random Data    
 
@@ -40,6 +43,20 @@ module RandomData
         [100.00, 80.00, 70.00, 60.00].sample
     end
 
+    # Data for Ride Controller Spec
+    
+    def self.random_date
+        5.days.ago
+    end
+    
+    def self.random_departure
+        ["Los Angeles", "San Francisco", "Portland", "Seattle"].sample
+    end
+    
+    def self.random_arrival
+        ["Las Vegas", "Corvallis", "San Jose", "Sacramento"].sample
+    end
+    
     
     
     

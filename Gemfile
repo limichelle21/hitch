@@ -24,7 +24,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Devise for user authentication
-gem 'devise'
+gem 'devise', '~> 4.1.0'
 
 # OmniAuth Providers
 gem 'omniauth'
@@ -40,6 +40,9 @@ gem 'autoprefixer-rails'
 
 # Use Figaro gem to encrypt secret keys
 gem 'figaro'
+
+# Use ActiveModel Serializer for JSON rendering
+gem 'active_model_serializers', '~> 0.10.0'
 
 # Use Unicorn as the app server
 # gem 'unicorn'

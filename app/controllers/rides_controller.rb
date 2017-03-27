@@ -1,6 +1,6 @@
 class RidesController < ApplicationController
     
-  before_action :get_user
+  before_action :get_user, except: :show
     
 
 # return rides based on search params    
@@ -17,20 +17,17 @@ class RidesController < ApplicationController
   end
     
   def edit
-      @ride = Ride.find(params(:id))
+      @ride = Ride.find(params[:id])
   end
     
     
 # create ride post here
   def create
-      @ride = Ride.new
       @ride = @user.rides.build(ride_params)
       if @ride.save
-          flash[:notice] = "Ride was saved."
-          redirect_to ride_path
+          render json: @ride, status: 200
         else
-          flash[:notice] = "There was an error saving your ride."
-          render :new
+          render json: {message: "There was an error"}, status: 400
       end
   end
 
@@ -39,11 +36,9 @@ class RidesController < ApplicationController
       @ride.assign_attributes(ride_params)
       
        if @ride.save
-          flash[:notice] = "Ride was updated."
-          redirect_to ride_path 
+           render json: @ride, status: 200
         else
-          flash[:error] = "There was an error updating the ride. Please try again."
-          render :edit
+           render json: {message: "There was an error updating the ride. Please try again."}, status: 400
         end
   end
     
