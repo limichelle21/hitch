@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="hitch">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -22,15 +22,16 @@
     
 </head>
 <body>
-    <header>
-        <%= render 'layouts/navigation' %>
-    </header>
-    
-    <main role="main">
-        <%= render 'layouts/messages' %>
-        <%= yield %>
-    </main>
-    
+    <div class="container" ng-view>
+        <header>
+            <%= render 'layouts/navigation' %>
+        </header>
+
+        <main role="main">
+            <%= render 'layouts/messages' %>
+            <%= yield %>
+        </main>
+    </div>
 
 </body>
 </html>

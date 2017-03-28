@@ -35,6 +35,13 @@ gem 'omniauth-facebook'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 
+# Include Angular
+gem 'angularjs-rails'
+gem 'angular-ui-bootstrap-rails' # for bootstrap UI
+
+# Include Bower to manage front end assets
+gem 'bower-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
