@@ -1,10 +1,11 @@
 class DisbursementsController < ApplicationController
     
-    
-    def create
+    def show
     end
     
     
+    def create
+    end
     
     
 end

@@ -1,7 +1,11 @@
+# A sample Bowerfile
+# Check out https://github.com/42dev/bower-rails#ruby-dsl-configuration for more options
+
+
+
 asset 'angular'
-asset 'angular-route'
-asset 'angular-resource'
-asset 'angular-mocks'
 asset 'bootstrap-sass-official'
-asset 'angular-flash'
-# vim: ft=ruby
+asset 'angular-sanitize'
+asset 'angular-bootstrap'
+asset 'angular-ui-select'
+asset 'angular-ui-router'

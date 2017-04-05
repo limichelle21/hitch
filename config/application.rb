@@ -23,5 +23,24 @@ module Hitch
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
     config.autoload_paths << File.join(config.root, "lib")
+      
+    config.assets.paths << Rails.root.join("vendor","assets","bower_components")
+    config.assets.paths << Rails.root.join("vendor","assets","bower_components","bootstrap-sass-official","assets","fonts")
+
+    config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff|woff2)$)  
+      
+      
+    config.assets.enabled = true
+      
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end  
+      
+      
+      
+      
   end
 end

@@ -1,21 +1,19 @@
 class MessagesController < ApplicationController
+  respond_to :json
     
   before_action :get_carpool
     
   def index
       @messages = @carpool.messages.all
+      render json: @messages, status: 200
   end
 
   def show 
       @message = @carpool.messages.find(params[:id])
-  end
-
-  def new
-      @message = Message.new
+      render json: @message, status: 200
   end
 
   def create
-      @message = Message.new
       @message = @carpool.messages.build(message_params)
       
       if @message.save
@@ -24,7 +22,7 @@ class MessagesController < ApplicationController
           render json: {message: "There was an error saving your message"}, status: 400
       end
       
-      # need to auto reflect in screen - Angular? 
+      render json: @message
   end
     
 

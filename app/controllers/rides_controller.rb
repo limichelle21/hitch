@@ -1,23 +1,29 @@
 class RidesController < ApplicationController
     
+  respond_to :json
+    
   before_action :get_user, except: :show
     
 
 # return rides based on search params    
   def index
       @rides = Ride.filter(params.slice(:date, :departure, :arrival))
+      render json: @rides
   end
 
   def show
       @ride = Ride.find(params[:id])
+      render json: @ride
   end
 
   def new
       @ride = Ride.new
+      render json: @ride
   end
     
   def edit
       @ride = Ride.find(params[:id])
+      render json: @ride
   end
     
     
@@ -29,6 +35,7 @@ class RidesController < ApplicationController
         else
           render json: {message: "There was an error"}, status: 400
       end
+      render json: @ride
   end
 
   def update
@@ -40,6 +47,7 @@ class RidesController < ApplicationController
         else
            render json: {message: "There was an error updating the ride. Please try again."}, status: 400
         end
+      render json: @ride
   end
     
   def confirm_ride

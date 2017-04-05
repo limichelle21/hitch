@@ -5,9 +5,8 @@
 
     <title><%= content_for?(:title) ? yield(:title) : "Hitch" %></title>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
-
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
     
     <script type="text/javascript" src="//cdn.rawgit.com/icons8/bower-webicon/v0.10.7/jquery-webicon.min.js"></script>
@@ -22,6 +21,8 @@
     
 </head>
 <body>
+    
+    
     <div class="container" ng-view>
         <header>
             <%= render 'layouts/navigation' %>
@@ -29,7 +30,9 @@
 
         <main role="main">
             <%= render 'layouts/messages' %>
-            <%= yield %>
+            
+            <ui-view></ui-view>
+        
         </main>
     </div>
 

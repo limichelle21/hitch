@@ -41,17 +41,19 @@
 
 
 
+
 <div class="container-fluid search">
     <h1>Where are you going?</h1>
     
     <label for="search_departure">Departure</label>
-
-    <input class="search-field" type="text" id="search_departure" placeholder="From" autocomplete="off">
+    <input class="search-field" type="text" id="search_departure" placeholder="From" autocomplete="off" ng-model="search.departure">
+    {{ search.departure }}
+  
     
     <label for="search_arrival">Arrival</label>
-    <input class="search-field" type="text" id="search_arrival" placeholder="To" autocomplete="off">
-    
-    
+    <input class="search-field" type="text" id="search_arrival" placeholder="To" autocomplete="off" ng-model="search.arrival">
+    {{ search.arrival }}
+
     <label for="datepicker-1">Date</label>
     <input class="search-field" type="text" id="datepicker-1">
     

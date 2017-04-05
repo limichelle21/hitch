@@ -12,14 +12,14 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
    root 'welcome#index'
   
-#    namespace :api do
-#        namespace :v1 do
-            resources :rides, only: [:index, :show, :new, :create, :edit, :update]
-            resources :carpools, only: [:create] do
-                resources :messages, only: [:show, :new, :create]
-            end
-#        end
-#    end
+  
+    namespace :api, defaults: {format: :json} do
+        resources :rides, only: [:index, :show, :create, :edit, :update]
+        resources :carpools, only: [:show, :create] do
+            resources :messages, only: [:show, :new, :create]
+        end
+    end
+
     
 
   # Example of regular route:
