@@ -24,8 +24,8 @@ module Hitch
     config.active_record.raise_in_transactional_callbacks = true
     config.autoload_paths << File.join(config.root, "lib")
       
-    config.assets.paths << Rails.root.join("vendor","assets","bower_components")
-    config.assets.paths << Rails.root.join("vendor","assets","bower_components","bootstrap-sass-official","assets","fonts")
+    config.assets.paths << Rails.root.join("vendor","assets")
+    config.assets.paths << Rails.root.join("vendor","assets","bootstrap-sass-official","assets","fonts")
 
     config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff|woff2)$)  
       

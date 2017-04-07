@@ -14,9 +14,11 @@ Rails.application.routes.draw do
   
   
     namespace :api, defaults: {format: :json} do
-        resources :rides, only: [:index, :show, :create, :edit, :update]
-        resources :carpools, only: [:show, :create] do
-            resources :messages, only: [:show, :new, :create]
+        namespace :vi do
+            resources :rides, only: [:index, :show, :create, :edit, :update]
+            resources :carpools, only: [:show, :create] do
+                resources :messages, only: [:show, :new, :create]
+            end
         end
     end
 

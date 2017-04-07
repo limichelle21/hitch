@@ -38,8 +38,7 @@ gem 'autoprefixer-rails'
 gem 'angularjs-rails'
 gem 'angular-rails-templates' # add Angular assets to Rails pipeline, removes need for AJAX calls
 
-# Include Bower to manage front end assets
-gem 'bower-rails'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
