@@ -1,0 +1,22 @@
+<div class="message-box">
+    <ul class="message-list">
+        <li class="message-item" ng-repeat="message in carpool.messages">
+            <span class="user">{{ message.username }}</span>
+            <p>
+                <span class="glyphicon glyphicon-time"></span>
+                {{ message.sentAt | date:"short }}
+                {{ message.content }}
+            </p>
+        </li>
+    </ul>
+</div>
+<div class="message-form">
+    <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea class="form-control" rows="4" id="message" ng-model="message.content" placeholder="Type your message here"></textarea>
+        <button type="submit" class="btn btn-success btn-sm" ng-click="message.saveMessage()">
+            <span class="glyphicon glyphicon-send"></span>
+            "Send Message"
+        </button>
+    </div>
+</div>

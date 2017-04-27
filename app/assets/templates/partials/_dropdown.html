@@ -1,0 +1,29 @@
+<script>
+    $(function() {
+        $( "#datepicker-1" ).datepicker();
+    });
+    
+    $(function() {
+        $( "#search_departure")
+    })
+    
+    $(function() {
+        $( "#search_arrival")
+    })
+</script>
+
+    
+<label for="search_departure">Departure</label>
+<input class="search-field" type="text" id="search_departure" placeholder="From" autocomplete="off" ng-model="search.departure">
+{{ search.departure }}
+
+
+<label for="search_arrival">Arrival</label>
+<input class="search-field" type="text" id="search_arrival" placeholder="To" autocomplete="off" ng-model="search.arrival">
+{{ search.arrival }}
+
+<label for="datepicker-1">Date</label>
+<input class="search-field" type="text" id="datepicker-1" ng-model="search.ride_date">
+
+
+<!-- Dropdown selection used in search ride, post new ride but requires list of locations already in the database? >

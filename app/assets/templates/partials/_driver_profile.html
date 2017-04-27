@@ -1,0 +1,42 @@
+
+<h3>Driver</h3>
+<div class="block-section">
+    <div class="profile-card">
+        <div class="profile-card-head">
+            <div class="profile-card-photo"></div>
+            <div class="profile-card-block">
+                <h4>{{ user.name | uppercase }}</h4>
+                <div class="profile-card-verified text-primary">ID verified</div>
+            </div>
+        </div>
+        <div class="profile-card-row">
+            <div class="profile-ratings">
+                <webicon icon="glyphicons:star"/>
+                <strong>{{ user.average_rating }}</strong>
+                <span class="text-muted">{{ user.ratings.count }} ratings</span>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <ul class="verification-list">
+        <li>
+            <webicon icon="iconic:circle-check"/>
+            <span class="text-success">Email Address Verified</span>
+        </li>
+        <li>
+            <webicon icon="iconic:circle-check"/>
+            <span class="text-success">Phone Number Verified</span>
+        </li>
+        <li>
+            <webicon icon="iconic:circle-check"/>
+            <span class="text-success">NUMBER Facebook Friends</span>
+        </li>
+    </ul>
+    <hr>
+    <h4>Driver Activity</h4>
+    <ul>
+        <li>{{ user.rides.count }} rides driven</li>
+        <li>Member since: {{ user.created_at | date: "MMMM y"}}</li>
+        <li>Last online: {{ user.last_sign_in_at | date: "EEE, MMM dd yyyy - hh:mm a"</li>
+    </ul>
+</div>

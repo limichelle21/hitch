@@ -1,0 +1,42 @@
+<div class="form-group">
+    <label for="ride_date">Ride Date</label>
+    <input class="date-picker" id="ride_date" placeholder="DD/MM/YYYY" required="required" ng-model="ride.date">
+    {{ ride.date }}
+</div>
+
+<div class="form-group">
+    <label for="departure">From</label>
+    <input type="text" id="departure" class="form-control" placeholder="From" autocomplete="off" ng-model="ride.departure" required>
+    {{ ride.departure }}
+</div>
+
+<div class="form-group">
+    <label for="arrival">To</label>
+    <input type="text" id="arrival" class="form-control" placeholder="To" autocomplete="off" ng-model="ride.arrival">
+    {{ ride.arrival }}
+</div>
+
+<div class="form-group">
+    <label for="total_seats">Number of Seats</label>
+    <select ng-model="ride.total_seats">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+    {{ ride.total_seats }}
+</div>
+
+<div class="form-group">
+    <label for="seat_price">Price per Seat</label>
+    <span class="input-group-addon">$</span>
+    <input type="text" id="seat_price" class="form-control" placeholder="15" autocomplete="off" ng-model="ride.seat_price">
+
+    {{ ride.seat_price }}
+</div>
+
+
+<div class="form-group">
+    <label for="notes">From</label>
+    <input class="text-field" type="text" id="notes" placeholder="Example: I am going to Los Angeles to visit my family. I'm leaving from Palo Alto Caltrain station at 10am. I am willing to drop off passengers en route. There's a space for a small backpack per person." autocomplete="off" ng-model="ride.notes">
+    {{ ride.notes }}
+</div>

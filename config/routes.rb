@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   
   
     namespace :api, defaults: {format: :json} do
-        namespace :vi do
+        namespace :v1 do
             resources :rides, only: [:index, :show, :create, :edit, :update]
             resources :carpools, only: [:show, :create] do
                 resources :messages, only: [:show, :new, :create]
@@ -22,6 +22,8 @@ Rails.application.routes.draw do
         end
     end
 
+    
+    get "*unmatched_route", to: "welcome#index"
     
 
   # Example of regular route:

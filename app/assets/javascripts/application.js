@@ -15,10 +15,11 @@
 //= require bootstrap-sprockets
 //= require angular
 //= require angular-rails-templates
-//= require angular-bootstrap
 //= require angular-ui-router
-//= require angular-ui-select
 //= require angular-resource
 //= require angular-sanitize
+//= require_tree ../templates
 //= require ng-app/app
+//= require_tree .
+
 

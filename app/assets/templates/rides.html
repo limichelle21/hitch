@@ -1,0 +1,51 @@
+<div class="ride-search">
+    <ul class="ride-search-results" ng-repeat="ride in rides">
+        <li class="single-ride">
+            <a href="api_v1_ride_path"> <!-- the entire div should be clickable link to the book ride page -->
+                <div class="col-md-2 driver-profile">
+                    <div class="driver-profile-head">
+                        <div class="driver-profile-picture">
+                        </div>
+                        <div class="driver-profile-info">
+                            <h2>{{ ride.user.name }}</h2>
+                        </div>
+                    </div>
+                    <div class="driver-profile-row">
+                        <p class="ratings-container">
+                            <span>{{ ride.user.ratings }}</span>
+                            <span>{{ ride.user.ratings.count }}</span>
+                        </p>
+                    </div>
+                    <div class="driver-profile-row">
+                        <span>
+                            <i class="FB LOGO"></i>
+                            {{ number of FB friends }}
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-8 ride-description">
+                    <h3>{{ ride.ride_date | date : "MMM d y - h:mm a" }}</h3>
+                    <h3>{{ ride.departure_location }} <webicon icon="glyphicons:arrow-right"/> {{ ride.arrival_location }}</h3>
+                    <dl class="ride-from">
+                        <dt><webicon icon="glyphicons:map-marker"/></dt>
+                        <dd>{{ ride.departure_location }}</dd>
+                    </dl>
+                    <dl class="ride-to">
+                        <dt><webicon icon="glyphicons:map-marker"/></dt>
+                        <dd>{{ ride.arrival_location }}</dd>
+                    </dl>
+                </div>
+                <div class="col-md-2 ride-offer">
+                    <div class="seat-price">
+                        <strong><span class>{{ ride.seat_price }}</span></strong>
+                        <span>per passenger</span>
+                    </div>
+                    <div class="availability">
+                        <strong>{{ ride.available_seats }}</strong>
+                        <span>seat left</span>
+                    </div>
+                </div>
+            </a> 
+        </li>
+    </ul>
+</div>
