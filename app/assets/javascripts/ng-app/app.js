@@ -1,5 +1,5 @@
 (function () {
-    function config($stateProvider, $locationProvider, $httpProvider) {
+    function config($stateProvider, $locationProvider, $httpProvider, AuthProvider) {
         $locationProvider
             .html5Mode({
                 enabled: true,
@@ -11,6 +11,11 @@
                 url: '/',
                 controller: 'WelcomeCtrl as welcome',
                 templateUrl: "welcome.html"
+            })
+            .state('login', {
+                url: '/login',
+                controller: 'AuthCtrl as auth',
+                templateUrl: "login.html"
             })
             .state('rides', {
                 url: '/rides',
@@ -30,7 +35,7 @@
             .state('book_ride', {
                 url: '/carpools/new',
                 controller: 'CarpoolCreateCtrl as carpool',
-                templateUrl: 'book_ride.html'
+                templateUrl: 'book_carpool.html'
             })
             .state('show_carpool', {
                 url: '/carpools/:id',
@@ -40,7 +45,7 @@
             .state('messages', {
                 url: '/messages',
                 controller: 'MessageCtrl as message',
-                templateUrl: 'message.html'
+                templateUrl: 'messages.html'
             });
         
     
@@ -52,7 +57,7 @@
     }   
     
     angular
-        .module('hitch', ['ui.router', 'templates', 'ngResource'])
+        .module('hitch', ['ui.router', 'templates', 'ngResource', 'Devise', 'ui.bootstrap'])
         .config(config);
 })();
 

@@ -1,0 +1,35 @@
+
+<!-- upon click, should go to show carpool confirmation page -->
+
+<div class="col-md-8">
+    <ng-include src="'partials/_ride_info.html'"></ng-include>
+</div>
+
+<div class="col-md-4">
+    <div class="ride-booking">
+        <div class="ride-booking-seats">
+            <span class="text-muted pull-left">Price per seat</span>
+            <strong><span class="pull-right"></span>{{ ride.seat_price }}</strong>  
+        </div> 
+        <div class="ride-booking-occupancy">
+            <span class="text-muted center-block">Seats left on this ride</span>
+            <strong><span>{{ ride.available_seats }}</span></strong> 
+        </div>
+        <div class="ride-booking-request">
+            <form method="POST">
+                <div class="form-group">
+                    <span>Number of seats to book</span>
+                    <select title="Number of seats to book">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <button class="btn btn-success" ng-click="newCarpool()">Request to Book</button>
+    </div>
+    
+    <div ng-include src='partials/_driver_profile.html'></div>
+    
+</div>

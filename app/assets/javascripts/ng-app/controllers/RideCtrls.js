@@ -1,5 +1,6 @@
 (function() {
     function RideIndexCtrl(Ride) {
+//        this.rides = Ride.query();
         this.rides = Ride.index();
         console.log("success!")
     };
@@ -25,10 +26,12 @@
     function RideCreateCtrl($stateParams, $state, Ride) {    
         this.ride = new Ride();
         this.newRide = function() {
-            this.ride.create(function() {
+            Ride.create(function() {
               $state.go('show ride')  
             })
         };
+           
+        
     };
 
     angular

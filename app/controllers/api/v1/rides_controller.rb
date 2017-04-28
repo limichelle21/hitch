@@ -4,7 +4,11 @@ class Api::V1::RidesController < ApiController
   before_action :get_user, except: :show
     
 
-# return rides based on search params    
+# return rides based on search params
+  def query
+      @rides = Ride.all
+  end
+    
   def index
       @rides = Ride.filter(params.slice(:date, :departure, :arrival))
       render json: @rides

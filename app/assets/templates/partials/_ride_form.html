@@ -1,6 +1,12 @@
-<div class="form-group">
+
+<div class="form-group" ng-controller="DatepickerPopupDemoCtrl">
     <label for="ride_date">Ride Date</label>
-    <input class="date-picker" id="ride_date" placeholder="DD/MM/YYYY" required="required" ng-model="ride.date">
+        <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup ng-model="ride.date" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </p>
     {{ ride.date }}
 </div>
 
@@ -28,15 +34,17 @@
 
 <div class="form-group">
     <label for="seat_price">Price per Seat</label>
-    <span class="input-group-addon">$</span>
-    <input type="text" id="seat_price" class="form-control" placeholder="15" autocomplete="off" ng-model="ride.seat_price">
-
-    {{ ride.seat_price }}
+    <p class="input-group">
+        <span class="input-group-addon">$</span>
+        <input type="text" id="seat_price" class="form-control" placeholder="15" autocomplete="off" ng-model="ride.seat_price">
+    </p>
+    {{ ride.seat_price | currency }}
 </div>
 
 
 <div class="form-group">
-    <label for="notes">From</label>
-    <input class="text-field" type="text" id="notes" placeholder="Example: I am going to Los Angeles to visit my family. I'm leaving from Palo Alto Caltrain station at 10am. I am willing to drop off passengers en route. There's a space for a small backpack per person." autocomplete="off" ng-model="ride.notes">
+    <label for="notes">Notes</label>
+    <br>
+    <textarea class="text-field" type="text" id="notes" cols="60" rows="6" placeholder="Example: I am going to Los Angeles to visit my family. I'm leaving from Palo Alto Caltrain station at 10am. I am willing to drop off passengers en route. There's a space for a small backpack per person." autocomplete="off" ng-model="ride.notes"></textarea>
     {{ ride.notes }}
 </div>
