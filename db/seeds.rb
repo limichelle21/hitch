@@ -22,7 +22,8 @@ include Faker
         payment_card_token: Faker::Lorem.characters(9),
         bank_account_token: Faker::Lorem.characters(9),
         card_type: RandomData.random_card_type,
-        last_4: Faker::Number.number(4)
+        last_4: Faker::Number.number(4),
+        uid: Faker::Lorem.characters(7)
         )
 end
 
@@ -44,7 +45,8 @@ users = User.all
         total_ride_amount: RandomData.random_total_amount,
         completed: RandomData.random_boolean,
         user: users.sample,
-        booked: RandomData.random_boolean
+        booked: RandomData.random_boolean,
+        departure_time: Faker::Time.between(DateTime.now - 1, DateTime.now)
         )
 end
 

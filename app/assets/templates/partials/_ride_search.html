@@ -1,0 +1,26 @@
+
+<div class="form-group" ng-controller="DatepickerPopupDemoCtrl">
+    <label for="ride_date">Ride Date</label>
+        <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup ng-model="ride.date" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </p>
+    {{ ride.date }}
+</div>
+
+<div class="form-group">
+    <label for="departure">From</label>
+    <input type="text" id="departure" class="form-control" placeholder="From" autocomplete="off" ng-model="ride.departure" required>
+    {{ ride.departure }}
+</div>
+
+<div class="form-group">
+    <label for="arrival">To</label>
+    <input type="text" id="arrival" class="form-control" placeholder="To" autocomplete="off" ng-model="ride.arrival">
+    {{ ride.arrival }}
+</div>
+
+
+

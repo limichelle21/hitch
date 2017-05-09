@@ -12,14 +12,16 @@
 
 
 (function() {
-    function CarpoolCreateCtrl($stateParams, $state,  Carpool) {
-        
+    function CarpoolCreateCtrl($stateParams, $state, Carpool) {
+       
+        this.ride = $stateParams.ride;
+    
         this.carpool = new Carpool();
 
         
         this.newCarpool = function() {
             this.carpool.create(function() {
-              $state.go('show carpool')  
+              $state.go('show_carpool')  
             })
         }
         

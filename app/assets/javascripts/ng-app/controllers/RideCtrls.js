@@ -1,13 +1,21 @@
 (function() {
-    function RideIndexCtrl(Ride) {
+    function RideIndexCtrl(Ride, $state) {
 //        this.rides = Ride.query();
         this.rides = Ride.index();
         console.log("success!")
-    };
+    
+    // function for ng-click to book carpool state
+        
+        this.newCarpool = function(ride) {
+            console.log("ride", ride)
+            $state.go('book_ride', {ride: ride})
+        }
+
+    };  
     
     angular
         .module('hitch')
-        .controller('RideIndexCtrl', ['Ride', RideIndexCtrl]);
+        .controller('RideIndexCtrl', ['Ride', '$state', RideIndexCtrl]);
 })();
 
     
@@ -27,7 +35,7 @@
         this.ride = new Ride();
         this.newRide = function() {
             Ride.create(function() {
-              $state.go('show ride')  
+              $state.go('show_ride')  
             })
         };
            

@@ -1,29 +1,42 @@
 (function() {
-    function NavCtrl(Auth) {
+    function NavCtrl($scope, Auth, $rootScope) {
         
         this.signedIn = Auth.isAuthenticated;
         this.logout = Auth.logout;
         
-        Auth.currentUser().then(function(user) {
-            this.user = user;
-        });
+        this.checkUser = function() {
+            Auth.currentUser().then(function (user){
+            $rootScope.user = user;
+            console.log(user);
+            })
+        };
+        
+        this.newUser = function() {
+            $scope.$on('devise:new-registration', function (e, user){
+                $rootScope.user = user;
+            });
+        };
         
         
-        this.$on('devise:new-registration', function (e, user){
-            this.user = user;
-        });
+        this.newSession = function() {
+            $scope.$on('devise:login', function (e, user){
+                $rootScope.user = user;
+            })
+        };
         
-        this.$on('devise:login', function (e, user){
-            this.user = user;
-        })
+        this.destroySession = function() {
+            $scope.$on('devise:logout', function (e, user){
+                $rootScope.user = undefined;
+            });
+        };
         
-        this.$on('devise:logout', function (e, user){
-            this.user = "";
-        });
         
     };
     
     angular
         .module('hitch')
-        .controller('NavCtrl', ['Auth', NavCtrl]);
+        .controller('NavCtrl', ['Auth', '$rootScope', '$scope', NavCtrl]);
 })();
+
+
+// need $scope for $on watcher method

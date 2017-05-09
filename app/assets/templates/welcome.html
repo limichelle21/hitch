@@ -1,11 +1,6 @@
-<script>
-    $(function() {
-        $( "#datepicker-1" ).datepicker();
-    });
-</script>
+<h4 ng-if="user">Welcome, {{user.username}}</h4>
 
-
-<div class="jumbotron">
+<div class="jumbotron">  
     <h1>Hitch</h1>
     <p>Find your ride</p>
     <button class="button-lg" onclick="#welcome-search">Search Now</button>
@@ -44,20 +39,10 @@
 
 <div class="container-fluid search" id="welcome-search">
     <h1>Where are you going?</h1>
-    
-    <label for="search_departure">Departure</label>
-    <input class="search-field" type="text" id="search_departure" placeholder="From" autocomplete="off" ng-model="welcome.departure">
-    {{ welcome.departure }}
-  
-    
-    <label for="search_arrival">Arrival</label>
-    <input class="search-field" type="text" id="search_arrival" placeholder="To" autocomplete="off" ng-model="welcome.arrival">
-    {{ welcome.arrival }}
 
-    <label for="datepicker-1">Date</label>
-    <input class="search-field" type="text" id="datepicker-1" ng-model="welcome.ride_date">
+    <ng-include src="'partials/_ride_search.html'"></ng-include>
     
-    <button class="button-lg" ng-click="ride.rides">Search</button>
+    <button class="button-md" ng-click="ride.rides">Search</button>
 
 </div>
 

@@ -11,5 +11,5 @@
     
     angular
         .module('hitch')
-        .factory('Message', ['$resource', postMessage])
+        .factory('Message', ['$resource', Message])
 })();

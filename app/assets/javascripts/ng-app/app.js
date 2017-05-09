@@ -15,7 +15,12 @@
             .state('login', {
                 url: '/login',
                 controller: 'AuthCtrl as auth',
-                templateUrl: "login.html"
+                templateUrl: "login.html",
+                onEnter: function(Auth, $state){
+                    Auth.currentUser().then(function(){
+                        $state.go('welcome')
+                    })
+                }
             })
             .state('rides', {
                 url: '/rides',
@@ -35,12 +40,14 @@
             .state('book_ride', {
                 url: '/carpools/new',
                 controller: 'CarpoolCreateCtrl as carpool',
-                templateUrl: 'book_carpool.html'
+                templateUrl: 'book_carpool.html',
+                params: {ride: ""}
             })
             .state('show_carpool', {
                 url: '/carpools/:id',
                 controller: 'CarpoolShowCtrl as carpool',
-                templateUrl: 'show_carpool.html'
+                templateUrl: 'show_carpool.html',
+                params: {carpool: ""}
             })
             .state('messages', {
                 url: '/messages',
@@ -48,9 +55,7 @@
                 templateUrl: 'messages.html'
             });
         
-    
-        //= Do I need states for user sign in/log in views from Devise?
-        
+
         $httpProvider
             .defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
             

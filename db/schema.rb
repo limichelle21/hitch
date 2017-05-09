@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170428073355) do
+ActiveRecord::Schema.define(version: 20170506173522) do
 
   create_table "carpools", force: :cascade do |t|
     t.integer  "user_id"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20170428073355) do
     t.datetime "updated_at",         null: false
     t.integer  "user_id"
     t.boolean  "booked"
+    t.time     "departure_time"
   end
 
   add_index "rides", ["user_id"], name: "index_rides_on_user_id"

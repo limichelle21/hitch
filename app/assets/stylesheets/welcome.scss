@@ -1,6 +1,5 @@
 .jumbotron {
-    background-image: url("../images/driving-road.jpg");
-    background-color: deepskyblue;
+    background-color: lightskyblue;
     background-size: cover;
     background-repeat: no-repeat;
     color: white;
@@ -39,7 +38,7 @@
 
 .search {
     min-height: 400px;
-    background-color: deepskyblue;
+    background-color: lightskyblue;
 }
 
 .search label {
@@ -59,16 +58,16 @@ webicon {
 
 /* Navbar - Navigation partial */
 
-#buttons li {
+#buttons a {
     float: left;
     list-style: none;
     text-align: center;
-    background-color: deepskyblue;
     margin-right: 30px;
     width: auto;
-    line-height: 2rem;
-    border-radius: 30px;
+    line-height: 4rem;
     margin: 1rem 1rem;
+    text-decoration: none;
+    color: black;
 }
 
 #buttons li a {

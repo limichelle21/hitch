@@ -1,21 +1,39 @@
-<h1>Sign Up or Sign In</h1>
+<h1>Login or Register</h1>
 <div class="row">
     <div class="col-sm-6">
-        <h2>Sign In</h2>
-        <div class="border-form-div">
-            <div>Email: <input ng-model="login_user.email"></div>
-            <div>Password: <input type="password" ng-model="login_user.password"></div>
-            <button ng-click="auth.login()" class="btn btn-primary">Login</button>
-        </div>
+        <h2 class="centered-text">Login</h2>
+        <form ng-submit="auth.login()">
+            <div class="border-form-div">
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Email" ng-model="login_user.email">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" ng-model="login_user.password">
+                </div>
+                <input type="submit" class="btn btn-info" value="Log In">
+            </div>
+        </form>
     </div>
 
     <div class="col-sm-6">
-        <h2>Sign Up</h2>
-        <div class="border-form-div">
-            <div>Email: <input ng-model="register_user.email"></div>
-            <div>Password: <input type="password" ng-model="register_user.password"></div>
-            <div>Password Confirmation: <input type="password" ng-model="register_user.password_confirmation"></div>
-            <button ng-click="auth.register()" class="btn btn-primary">Register</button>
-        </div>
+        <h2 class="centered-text">Register</h2>
+        <form ng-submit="auth.register()">
+            <div class="border-form-div">
+                <div>
+                    <input type="email" class="form-control" placeholder="Email" ng-model="register_user.email"?>
+                </div>
+                <div>
+                    <input type="text" class="form-control" placeholder="Username" ng-model="register_user.username">
+                </div>
+                <div>
+                    <input type="password" class="form-control" placeholder="Password" ng-model="register_user.password">
+                </div>
+                <div>
+                    <input type="password" class="form-control" placeholder="Enter your password again" ng-model="register_user.password_confirmation">
+                </div>
+                <input type="submit" class="btn btn-info" value="Register">
+            </div>
+        </form>
     </div>
+    
 </div>

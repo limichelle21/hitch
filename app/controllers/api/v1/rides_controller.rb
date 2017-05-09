@@ -7,6 +7,7 @@ class Api::V1::RidesController < ApiController
 # return rides based on search params
   def query
       @rides = Ride.all
+      render json: @rides
   end
     
   def index

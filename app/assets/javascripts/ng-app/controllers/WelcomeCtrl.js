@@ -4,7 +4,7 @@
         this.ride_date = "";
         this.departure = "";
         this.arrival = "";
-        
+    
     };
     
     angular

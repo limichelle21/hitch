@@ -16,6 +16,9 @@
          rel = "stylesheet">
     <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <!-- Webicons -->
+    <script type="text/javascript" src="//cdn.rawgit.com/icons8/bower-webicon/v0.10.7/angular-webicon.min.js"></script>
+
  
 
     
@@ -24,9 +27,7 @@
     
     
     <div class="container" ng-view>
-        <header>
-            <%= render 'layouts/navigation' %>
-        </header>
+        <nav-bar></nav-bar>
 
         <main role="main">
             <%= render 'layouts/messages' %>
