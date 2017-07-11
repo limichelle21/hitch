@@ -76,6 +76,7 @@ group :development do
   gem 'spring'
 end
 
+# Provides Devise as Angular module and Auth service
 source "https://rails-assets.org" do
   gem "rails-assets-angular-devise"
 end

@@ -1,26 +1,28 @@
+<!-- <div class="form-group">
+    <label for="departure">BASIC SEARCH</label>
+    <input type="text" id="search" class="form-control" ng-model="ride.search" ng-required="true">
+    {{ ride.search}}
+</div> -->
 
 <div class="form-group" ng-controller="DatepickerPopupDemoCtrl">
     <label for="ride_date">Ride Date</label>
         <p class="input-group">
-            <input type="text" class="form-control" uib-datepicker-popup ng-model="ride.date" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            <input type="text" id="search-date" class="form-control" uib-datepicker-popup ng-model="welcome.date" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" />
             <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
         </p>
-    {{ ride.date }}
+    {{ welcome.date }}
 </div>
 
 <div class="form-group">
     <label for="departure">From</label>
-    <input type="text" id="departure" class="form-control" placeholder="From" autocomplete="off" ng-model="ride.departure" required>
-    {{ ride.departure }}
+    <input type="text" id="search-departure" class="form-control" placeholder="From" autocomplete="off" ng-model="welcome.departure" required>
+    {{ welcome.departure }}
 </div>
 
 <div class="form-group">
     <label for="arrival">To</label>
-    <input type="text" id="arrival" class="form-control" placeholder="To" autocomplete="off" ng-model="ride.arrival">
-    {{ ride.arrival }}
+    <input type="text" id="search-arrival" class="form-control" placeholder="To" autocomplete="off" ng-model="welcome.arrival">
+    {{ welcome.arrival }}
 </div>
-
-
-

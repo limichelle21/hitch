@@ -13,7 +13,7 @@ include Faker
 
 20.times do
     User.create!(
-        username: Faker::Internet.user_name, 
+        username: Faker::Internet.user_name,
         email: Faker::Internet.email,
         phone_number: Faker::PhoneNumber.phone_number,
         password: Faker::Internet.password,
@@ -23,7 +23,8 @@ include Faker
         bank_account_token: Faker::Lorem.characters(9),
         card_type: RandomData.random_card_type,
         last_4: Faker::Number.number(4),
-        uid: Faker::Lorem.characters(7)
+        uid: Faker::Lorem.characters(7),
+        name: Faker::Name.name
         )
 end
 
@@ -69,14 +70,14 @@ carpools = Carpool.all
 
 # Create Messages
 
-20.times do 
+20.times do
     Message.create!(
         content: Faker::Lorem.sentence,
         sent_at: Faker::Time.between(2.days.ago, Date.today, :all),
         user: users.sample,
         carpool: carpools.sample
         )
-    
+
 end
 
 messages = Message.all
@@ -137,6 +138,3 @@ puts "#{Message.count} messages"
 puts "#{Rating.count} ratings"
 puts "#{Payment.count} payments"
 puts "#{Disbursement.count} disbursements"
-
-
-

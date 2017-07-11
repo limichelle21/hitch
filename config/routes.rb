@@ -6,14 +6,14 @@ Rails.application.routes.draw do
 #      sessions: 'users/sessions',
 #      omniauth_callbacks: 'users/omniauth_callbacks'
 #      }
-    
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
    root 'welcome#index'
-  
-  
+
+
     namespace :api, defaults: {format: :json} do
         namespace :v1 do
             resources :rides, only: [:index, :show, :create, :edit, :update]
@@ -23,9 +23,9 @@ Rails.application.routes.draw do
         end
     end
 
-    
+
     get "*unmatched_route", to: "welcome#index"
-    
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -1,0 +1,89 @@
+<h4 ng-if="user">Welcome, {{user.username}}</h4>
+
+<a name="about"></a>
+    <div class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                        <h1>Hitch</h1>
+                        <h3>Find Your Ride</h3>
+                        <hr class="intro-divider">
+                        <ul class="list-inline intro-social-buttons">
+                            <li>
+                                <a href="#" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Search Now</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.intro-header -->
+
+<section class="selling-points">
+    <div class="container-fluid section-heading">
+        <h2>Get Where You Need to Be</h2>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="selling-point-img">
+                  <%= image_tag "calendar.png" %>
+                </div>
+                <h2>Book In Advance</h2>
+                <p>Know your schedule? Search early to find your best rides</p>
+            </div>
+            <div class="col-xs-4">
+                <div class="selling-point-img">
+                  <%= image_tag "car.png" %>
+                </div>
+                <h2>Verified Drivers</h2>
+                <p>Our community of drivers are rated on each ride they have driven</p>
+            </div>
+            <div class="col-xs-4">
+                <div class="selling-point-img">
+                  <%= image_tag "creditcard.png" %>
+                </div>
+                <h2>Seamless Payment</h2>
+                <p>Pay or receive payment online without the hassle of cash transactions</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<hr class="section-divider">
+<div class="container-fluid search" id="welcome-search">
+    <h1>Where are you going?</h1>
+    <ng-include src="'partials/_ride_search.html'"></ng-include>
+    <button class="btn btn-default" ng-click="welcome.submit()">Search</button>
+</div>
+
+
+<hr class="section-divider">
+<div class="container-fluid section-heading">
+    <h2>How Does Hitch Work?</h2>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="selling-point-img">
+                <%= image_tag "search.png" %>
+            </div>
+            <h2>Search for a Ride</h2>
+            <p>Enter in your route and date of travel.</p>
+        </div>
+        <div class="col-xs-4">
+            <div class="selling-point-img">
+                <%= image_tag "checkmark.png" %>
+            </div>
+            <h2>Confirm Your Trip</h2>
+            <p>Reserve the number of seats you need online.</p>
+        </div>
+        <div class="col-xs-4">
+            <div class="selling-point-img">
+                <%= image_tag "group.png" %>
+            </div>
+            <h2>Get Hitched Up</h2>
+            <p>Share a ride and share your opinion after your trip to help others.</p>
+        </div>
+    </div>
+</div>

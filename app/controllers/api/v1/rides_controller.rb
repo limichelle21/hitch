@@ -1,19 +1,24 @@
 class Api::V1::RidesController < ApiController
-    
+
   respond_to :json
   before_action :get_user, except: :show
-    
+
 
 # return rides based on search params
-  def query
-      @rides = Ride.all
-      render json: @rides
-  end
-    
+
+
   def index
-      @rides = Ride.filter(params.slice(:date, :departure, :arrival))
-      render json: @rides
+
+    if params[:date] && params[:departure] && params[:arrival]
+      # params[:date] = params[:date].to_date
+      # @rides = Ride.filter(params.slice(:ride_date, :departure_location, :arrival_location))
+      @rides = Ride.where("ride_date LIKE (%?%) AND departure_location LIKE (%?%) AND arrival_location LIKE (%?%)", params[:date].to_date, params[:departure], params[:arrival])
+    else
+      @rides = Ride.all
+    end
+    render json: @rides
   end
+
 
   def show
       @ride = Ride.find(params[:id])
@@ -24,13 +29,13 @@ class Api::V1::RidesController < ApiController
       @ride = Ride.new
       render json: @ride
   end
-    
+
   def edit
       @ride = Ride.find(params[:id])
       render json: @ride
   end
-    
-    
+
+
 # create ride post here
   def create
       @ride = @user.rides.build(ride_params)
@@ -45,7 +50,7 @@ class Api::V1::RidesController < ApiController
   def update
       @ride = Ride.find(params[:id])
       @ride.assign_attributes(ride_params)
-      
+
        if @ride.save
            render json: @ride, status: 200
         else
@@ -53,26 +58,29 @@ class Api::V1::RidesController < ApiController
         end
       render json: @ride
   end
-    
+
   def confirm_ride
       # process Stripe payment here, set ride.booked = true
   end
 
-    
+
   private
-  
+
     def ride_params
-        params.require(:ride).permit(:ride_date, :departure_location, :arrival_location, :seat_price, :total_seats, :notes)
+        params.require(:ride).permit(:ride_date, :departure_location, :arrival_location, :seat_price, :total_seats, :notes, :departure_time)
     end
-    
+
+    def search_params
+      params.permit(:ride_date, :departure_location, :arrival_location)
+    end
+
     def filtering_params(params)
-        params.slice(:date, :departure, :arrival)
+        params.slice(:ride_date, :departure_location, :arrival_location)
     end
-    
-    
+
+
     def get_user
         @user = current_user
     end
-    
-end
 
+end

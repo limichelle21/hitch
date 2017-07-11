@@ -6,36 +6,55 @@
     <title><%= content_for?(:title) ? yield(:title) : "Hitch" %></title>
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300|Raleway:300">
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
-    
+
     <script type="text/javascript" src="//cdn.rawgit.com/icons8/bower-webicon/v0.10.7/jquery-webicon.min.js"></script>
-    
+
     <!-- jQuery -->
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
          rel = "stylesheet">
     <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <!-- Webicons -->
-    <script type="text/javascript" src="//cdn.rawgit.com/icons8/bower-webicon/v0.10.7/angular-webicon.min.js"></script>
+    <!-- ng Token Auth -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-token-auth/0.0.30/ng-token-auth.js"></script>
 
- 
-
-    
 </head>
 <body>
-    
-    
     <div class="container" ng-view>
         <nav-bar></nav-bar>
-
         <main role="main">
             <%= render 'layouts/messages' %>
-            
             <ui-view></ui-view>
-        
         </main>
     </div>
-
 </body>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="list-inline">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="footer-menu-divider">&sdot;</li>
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                    <li class="footer-menu-divider">&sdot;</li>
+                    <li>
+                        <a href="#">Services</a>
+                    </li>
+                    <li class="footer-menu-divider">&sdot;</li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+                <p class="copyright text-muted small">Copyright &copy; Hitch 2017. All Rights Reserved</p>
+            </div>
+        </div>
+    </div>
+</footer>
 </html>

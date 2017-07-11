@@ -6,6 +6,7 @@ module Filterable
             results = self.where(nil)
             filtering_params.each do |key, value|
                 results = results.public_send(key, value)
+                puts "results: #{results}"
             end
             results
         end

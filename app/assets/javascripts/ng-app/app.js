@@ -5,7 +5,7 @@
                 enabled: true,
                 requireBase: false
             });
-        
+
         $stateProvider
             .state('welcome', {
                 url: '/',
@@ -25,7 +25,12 @@
             .state('rides', {
                 url: '/rides',
                 controller: 'RideIndexCtrl as ride',
-                templateUrl: 'rides.html'
+                templateUrl: 'rides.html',
+                params: {
+                  date: null,
+                  departure: null,
+                  arrival: null
+                }
             })
             .state('new_ride', {
                 url: '/rides/new',
@@ -54,17 +59,14 @@
                 controller: 'MessageCtrl as message',
                 templateUrl: 'messages.html'
             });
-        
+
 
         $httpProvider
             .defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
-            
-    }   
-    
+
+    }
+
     angular
         .module('hitch', ['ui.router', 'templates', 'ngResource', 'Devise', 'ui.bootstrap'])
         .config(config);
 })();
-
-
-
