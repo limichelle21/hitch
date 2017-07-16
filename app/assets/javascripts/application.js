@@ -18,10 +18,7 @@
 //= require angular-ui-router
 //= require angular-resource
 //= require angular-sanitize
-//= require angular-devise
 //= require angular-ui-bootstrap
 //= require_tree ../templates
 //= require ng-app/app
 //= require_tree .
-
-

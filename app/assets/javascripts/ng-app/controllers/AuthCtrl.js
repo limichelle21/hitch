@@ -1,6 +1,6 @@
 (function() {
-    function AuthCtrl($state, Auth) {
-        
+    function AuthCtrl($state) {
+
         // What are the config options and why are they required?
         // Per docs: var config = { headers: { 'X-HTTP-Method-Override': 'POST' }};
 
@@ -19,7 +19,7 @@
                    console.log(user);
                    $state.go('welcome');
                });
-            };     
+            };
 
             this.logout = function() {
                 Auth.logout.then(function(oldUser){
@@ -28,8 +28,8 @@
                 });
             };
         };
-    
+
     angular
         .module('hitch')
-        .controller('AuthCtrl', ['$state', 'Auth', AuthCtrl]);
+        .controller('AuthCtrl', ['$state', AuthCtrl]);
 })();

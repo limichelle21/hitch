@@ -2,10 +2,10 @@
     function navBar() {
         return {
             templateUrl: 'nav.html',
-            controller: 'NavCtrl'
+            controller: 'AuthCtrl'
         }
     }
-    
+
     angular
         .module('hitch')
         .directive('navBar', [navBar])

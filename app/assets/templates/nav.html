@@ -5,8 +5,8 @@
         </div>
         <ul class="nav navbar-nav pull-right">
             <li><a ui-sref="welcome">Home</a></li>
-            <li ng-hide="signedIn()"><a ui-sref="login">Login | Register</a></li>
-            <li ng-show="signedIn()"><a ng-click="logout()">Logout</a></li>
+            <li ng-show="!user.id"><a ui-sref="login">Login | Register</a></li>
+            <li ng-show="user.id"><a ng-click="logout()">Logout</a></li>
             <li ng-show="signedIn()"><a ui-sref="new_ride">Post New Ride</a></li>
         </ul>
     </div>

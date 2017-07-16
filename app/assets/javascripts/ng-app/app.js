@@ -1,5 +1,5 @@
 (function () {
-    function config($stateProvider, $locationProvider, $httpProvider, AuthProvider) {
+    function config($stateProvider, $locationProvider, $httpProvider) {
         $locationProvider
             .html5Mode({
                 enabled: true,
@@ -26,11 +26,7 @@
                 url: '/rides',
                 controller: 'RideIndexCtrl as ride',
                 templateUrl: 'rides.html',
-                params: {
-                  date: null,
-                  departure: null,
-                  arrival: null
-                }
+                params: {date: null, departure: null, arrival: null}
             })
             .state('new_ride', {
                 url: '/rides/new',
@@ -67,6 +63,6 @@
     }
 
     angular
-        .module('hitch', ['ui.router', 'templates', 'ngResource', 'Devise', 'ui.bootstrap'])
+        .module('hitch', ['ui.router', 'templates', 'ngResource', 'ui.bootstrap'])
         .config(config);
 })();
