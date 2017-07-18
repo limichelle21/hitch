@@ -18,6 +18,8 @@
 //= require angular-ui-router
 //= require angular-resource
 //= require angular-sanitize
+//= require ng-token-auth
+//= require ipCookie
 //= require angular-ui-bootstrap
 //= require_tree ../templates
 //= require ng-app/app

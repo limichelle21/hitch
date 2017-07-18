@@ -1,35 +1,48 @@
 (function() {
-    function AuthCtrl($state) {
+    function AuthCtrl($state, $scope, $auth, $location) {
 
+        var auth = this;
         // What are the config options and why are they required?
         // Per docs: var config = { headers: { 'X-HTTP-Method-Override': 'POST' }};
+        $scope.$on('auth:login-error', function(ev, reason) {
+          $scope.error1 = reason.errors[0];
+          alert('Login error because ' + reason.errors[0]);
+          });
 
-            this.login_user = {email: null, password: null};
-            this.register_user = {email: null, password: null, password_confirmation: null};
+        $scope.$on('auth:registration-email-error', function(ev, reason) {
+          $scope.error2 = reason.errors[0];
+          alert('Registration error because ' + reason.errors[0]);
+        });
 
-            this.login = function() {
-               Auth.login(this.login_user).then(function(user){
-                   console.log(user);
-                   $state.go('welcome');
-               });
-            };
+        $scope.$on('auth:logout-error', function(ev, reason) {
+          $scope.error = reason.errors[0];
+          alert('Logout failed because ' + reason.errors[0]);
+        })
 
-            this.register = function() {
-               Auth.register(this.register_user).then(function(user){
-                   console.log(user);
-                   $state.go('welcome');
-               });
-            };
+        auth.submitLogin = function() {
+          $auth.submitLogin(auth.loginForm)
+            .then(function() {
+              $state.go('welcome')
+            });
+        }
 
-            this.logout = function() {
-                Auth.logout.then(function(oldUser){
-                    alert(oldUser.name + " you're signed out now");
-                    $state.go('welcome');
-                });
-            };
+        auth.handleRegBtnClick = function() {
+          $auth.submitRegistration(auth.registrationForm)
+            .then(function() {
+            $scope.error = 'Thanks for registering. Please check your email to confirm your email address';
+            });
+          };
+
+        auth.handleSignOutBtnClick = function() {
+          $auth.signOut()
+            .then(function(resp) {
+              $state.go('welcome')
+            })
         };
+
+      };
 
     angular
         .module('hitch')
-        .controller('AuthCtrl', ['$state', AuthCtrl]);
+        .controller('AuthCtrl', ['$state', '$scope', '$auth', '$location', AuthCtrl]);
 })();

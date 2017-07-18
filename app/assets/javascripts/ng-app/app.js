@@ -1,5 +1,10 @@
 (function () {
-    function config($stateProvider, $locationProvider, $httpProvider) {
+    function config($stateProvider, $locationProvider, $httpProvider, $authProvider) {
+        $authProvider
+            .configure({
+              apiUrl: '/api/v1'
+            });
+
         $locationProvider
             .html5Mode({
                 enabled: true,
@@ -15,12 +20,7 @@
             .state('login', {
                 url: '/login',
                 controller: 'AuthCtrl as auth',
-                templateUrl: "login.html",
-                onEnter: function(Auth, $state){
-                    Auth.currentUser().then(function(){
-                        $state.go('welcome')
-                    })
-                }
+                templateUrl: "login.html"
             })
             .state('rides', {
                 url: '/rides',
@@ -63,6 +63,6 @@
     }
 
     angular
-        .module('hitch', ['ui.router', 'templates', 'ngResource', 'ui.bootstrap'])
+        .module('hitch', ['ui.router', 'templates', 'ngResource', 'ng-token-auth', 'ipCookie', 'ui.bootstrap'])
         .config(config);
 })();

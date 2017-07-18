@@ -23,7 +23,6 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Devise for user authentication
-gem 'devise', '~> 4.1.0'
 gem 'devise_token_auth'
 
 # OmniAuth Providers

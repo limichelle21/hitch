@@ -2,7 +2,7 @@
     function navBar() {
         return {
             templateUrl: 'nav.html',
-            controller: 'AuthCtrl'
+            controller: 'AuthCtrl as auth'
         }
     }
 

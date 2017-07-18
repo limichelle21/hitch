@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount_devise_token_auth_for 'User', at: 'auth'
+
 
 #  devise_for :users, controllers: {
 #      registrations: 'users/registrations',
@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
     namespace :api, defaults: {format: :json} do
         namespace :v1 do
+            mount_devise_token_auth_for 'User', at: 'auth'
             resources :rides, only: [:index, :show, :create, :edit, :update]
             resources :carpools, only: [:show, :create] do
                 resources :messages, only: [:show, :new, :create]

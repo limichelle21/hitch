@@ -1,7 +1,7 @@
 class Api::V1::RidesController < ApiController
 
   respond_to :json
-  before_action :get_user, except: :show
+  before_action :get_user, only: :new
 
 
 # return rides based on search params
@@ -12,7 +12,7 @@ class Api::V1::RidesController < ApiController
     if params[:date] && params[:departure] && params[:arrival]
       # params[:date] = params[:date].to_date
       # @rides = Ride.filter(params.slice(:ride_date, :departure_location, :arrival_location))
-      @rides = Ride.where("ride_date LIKE (%?%) AND departure_location LIKE (%?%) AND arrival_location LIKE (%?%)", params[:date].to_date, params[:departure], params[:arrival])
+      @rides = Ride.where("ride_date LIKE (?) AND departure_location LIKE (?) AND arrival_location LIKE (?)", params[:date].to_date, params[:departure], params[:arrival])
     else
       @rides = Ride.all
     end

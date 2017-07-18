@@ -8,20 +8,20 @@
 </div>
 <div class="ride-search" ng-hide="ride.loading">
     <div class="ride-search-results container-fluid">
-        <div class="single-ride row" ng-repeat="ride in ride.rides" ng-click="ride.newCarpool(ride)">
-            <a ng-click="ride.newCarpool('testing')">Click Me Inside Div</a>
+        <div class="single-ride row" ng-repeat="r in ride.rides" ng-click="ride.newCarpool(r)">
+            <a ng-click="ride.newCarpool(r)">Click Me Inside Div</a>
                 <div class="col-md-2 driver-profile container-fluid">
                     <div class="driver-profile-head">
                         <div class="driver-profile-picture">
                         </div>
                         <div class="driver-profile-info">
-                            <h2>{{ ride.user.username }} Driver Name</h2>
+                            <h2>{{ r.user.username }} Driver Name</h2>
                         </div>
                     </div>
                     <div class="driver-profile-row">
                         <p class="ratings-container">
-                            <span>{{ ride.user_id.ratings }} 4.6/5 </span>
-                            <span>{{ ride.user_id.ratings.count }} 15 ratings</span>
+                            <span>{{ r.user_id.ratings }} 4.6/5 </span>
+                            <span>{{ r.user_id.ratings.count }} 15 ratings</span>
                         </p>
                     </div>
                     <div class="driver-profile-row">
@@ -32,24 +32,22 @@
                     </div>
                 </div>
                 <div class="col-md-8 ride-description container-fluid">
-                    <h3>{{ ride.ride_date }}</h3>
-                    <h3>{{ ride.departure_location }} > {{ ride.arrival_location }}</h3>
+                    <h3>{{ r.ride_date }}</h3>
+                    <h3>{{ r.departure_location }} > {{ r.arrival_location }}</h3>
                     <dl class="ride-from">
-                        <dd><%= image_tag "003-green-circle.png" %> {{ ride.departure_location }} at {{ ride.departure_time }}</dd>
+                        <dd><%= image_tag "003-green-circle.png" %> {{ r.departure_location }} at {{ r.departure_time | date : 'shortTime' }}</dd>
                     </dl>
                     <dl class="ride-to">
-                        <dd><%= image_tag "002-red-circle.png" %> {{ ride.arrival_location }}</dd>
+                        <dd><%= image_tag "002-red-circle.png" %> {{ r.arrival_location }}</dd>
 
                     </dl>
                 </div>
                 <div class="col-md-2 ride-offer container-fluid">
                     <div class="seat-price">
-                        <strong><span class>{{ ride.seat_price | currency : $ }}</span></strong>
-                        <span>per passenger</span>
+                        <strong><span class>{{ r.seat_price | currency : $ }} per passenger</span></strong>
                     </div>
                     <div class="availability">
-                        <strong>{{ ride.available_seats }}</strong>
-                        <span>seat left</span>
+                        <strong>{{ r.available_seats }}</strong><span> open spots</span>
                     </div>
                 </div>
                 <hr class="section-divider">
