@@ -42,13 +42,13 @@
                 url: '/carpools/new',
                 controller: 'CarpoolCreateCtrl as carpool',
                 templateUrl: 'book_carpool.html',
-                params: {ride: ""}
+                params: {ride: null}
             })
             .state('show_carpool', {
                 url: '/carpools/:id',
                 controller: 'CarpoolShowCtrl as carpool',
                 templateUrl: 'show_carpool.html',
-                params: {carpool: ""}
+                params: {carpool: null}
             })
             .state('messages', {
                 url: '/messages',

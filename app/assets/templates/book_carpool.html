@@ -1,35 +1,56 @@
-
-<!-- upon click, should go to show carpool confirmation page -->
-
-<div class="col-md-8">
-    <ng-include src="'partials/_ride_info.html'" ng-init="ride = carpool.ride"></ng-include>
-</div>
-
-<div class="col-md-4">
-    <div class="ride-booking">
-        <div class="ride-booking-seats">
-            <span class="text-muted pull-left">Price per seat</span>
-            <strong><span class="pull-right"></span>{{ carpool.ride.seat_price }}</strong>
-        </div>
-        <div class="ride-booking-occupancy">
-            <span class="text-muted center-block">Seats left on this ride</span>
-            <strong><span>{{ carpool.ride.available_seats }}</span></strong>
-        </div>
-        <div class="ride-booking-request">
-            <form method="POST">
-                <div class="form-group">
-                    <span>Number of seats to book</span>
-                    <select title="Number of seats to book">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                </div>
-            </form>
-        </div>
-        <button class="btn btn-success" ng-click="newCarpool()">Request to Book</button>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="ride-details">
+          <div class="ride-details-info">
+              <img src="/assets/003-green-circle.png"> <span class="ride-details-info-label">Pick-up location</span>
+              <span>{{ carpool.ride.departure_location }}</span>
+          </div>
+          <div class="ride-details-info">
+              <img src="/assets/002-red-circle.png"> <span class="ride-details-info-label">Drop-off location</span>
+              <span>{{ carpool.ride.arrival_location }}</span>
+          </div>
+          <div class="ride-details-info">
+              <img src="/assets/calendar.png" height="24" width="24"> <span class="ride-details-info-label">Date</span>
+              <strong><span>{{ carpool.ride.ride_date | date : "MMM d y - h:mm a" }}</span></strong>
+          </div>
+          <div class="ride-details-comment">
+              <div class="ride-notes">
+                  <div class="ride-notes-photo"></div>
+                  <div class="ride-notes-content">
+                      <strong><h3>Driver: {{ carpool.ride.user.name }}</h3></strong>
+                      <h4>{{ carpool.ride.notes }}</h4>
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>
 
-    <div ng-include src='partials/_driver_profile.html'></div>
-
+    <div class="col-md-4">
+        <div class="ride-booking">
+            <div class="ride-booking-seats">
+                <span class="text-muted pull-left">Price per seat</span>
+                <strong><span class="pull-right"></span>{{ carpool.ride.seat_price }}</strong>
+            </div>
+            <div class="ride-booking-occupancy">
+                <span class="text-muted center-block">Seats left on this ride</span>
+                <strong><span>{{ carpool.ride.available_seats }}</span></strong>
+            </div>
+            <div class="ride-booking-request">
+                <form method="POST">
+                    <div class="form-group">
+                        <span>Number of seats to book</span>
+                        <select title="Number of seats to book">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <button class="btn btn-success" ng-click="newCarpool()">Request to Book</button>
+        </div>
+        <div ng-include src='partials/_driver_profile.html'></div>
+    </div>
+  </div>
 </div>

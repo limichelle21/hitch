@@ -9,7 +9,7 @@
 <div class="ride-search" ng-hide="ride.loading">
     <div class="ride-search-results container-fluid">
         <div class="single-ride row" ng-repeat="r in ride.rides" ng-click="ride.newCarpool(r)">
-            <a ng-click="ride.newCarpool(r)">Click Me Inside Div</a>
+            <button type="submit" class="btn btn-info btn-lg" ng-click=ride.newCarpool(r)>Book This Ride</button>
                 <div class="col-md-2 driver-profile container-fluid">
                     <div class="driver-profile-head">
                         <div class="driver-profile-picture">

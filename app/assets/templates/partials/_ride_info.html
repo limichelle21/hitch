@@ -1,17 +1,14 @@
 <div class="ride-details">
-    <div class="ride-details-info">  
+    <div class="ride-details-info">
         <span class="ride-details-info-label">Pick-up location</span>
-        <webicon icon="glyphicons:map-marker" style="color: #3ad174;"/>
-        <span>{{ ride.departure_location }}</span>
+        <img src="003-green-circle.png"><span>{{ ride.departure_location }}</span>
     </div>
     <div class="ride-details-info">
         <span class="ride-details-info-label">Drop-off location</span>
-        <webicon icon="glyphicons:map-marker" style="color: #ed3838;"/>
-        <span>{{ ride.arrival_location }}</span>
+        <img src="002-red-circle.png"><span>{{ ride.arrival_location }}</span>
     </div>
     <div class="ride-details-info">
         <span class="ride-details-info-label">Date</span>
-        <webicon icon="glyphicons:calendar"/>
         <strong><span>{{ ride.ride_date | date : "MMM d y - h:mm a" }}</span></strong>
     </div>
     <div class="ride-details-comment">

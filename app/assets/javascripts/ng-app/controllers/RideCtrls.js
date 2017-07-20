@@ -17,8 +17,8 @@
     // function for ng-click to book carpool state
 
         ride.newCarpool = function(ride) {
-            console.log("ride", ride)
-            $state.go('book_ride', {ride: ride})
+            console.log("ride to be passed", ride)
+            $state.go('book_ride', {ride: ride.ride})
         }
         return ride;
       };

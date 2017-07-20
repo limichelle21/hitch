@@ -15,6 +15,7 @@
     function CarpoolCreateCtrl($state, Carpool) {
 
         this.ride = $state.params.ride;
+        console.log("ride received", $state.params.ride)
         this.carpool = new Carpool();
 
         this.newCarpool = function() {
