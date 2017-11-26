@@ -1,7 +1,8 @@
 <div class="message-box">
+  <h4>Message History should display here</h4>
     <ul class="message-list">
         <li class="message-item" ng-repeat="message in carpool.messages">
-            <span class="user">{{ message.username }}</span>
+            <span class="user">Messages display here {{ message.username }}</span>
             <p>
                 <span class="glyphicon glyphicon-time"></span>
                 {{ message.sentAt | date:"short }}

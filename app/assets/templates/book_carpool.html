@@ -4,22 +4,22 @@
       <div class="ride-details">
           <div class="ride-details-info">
               <img src="/assets/003-green-circle.png"> <span class="ride-details-info-label">Pick-up location</span>
-              <span>{{ carpool.ride.departure_location }}</span>
+              <h4>{{ carpool.ride.departure_location }}</h4>
           </div>
           <div class="ride-details-info">
               <img src="/assets/002-red-circle.png"> <span class="ride-details-info-label">Drop-off location</span>
-              <span>{{ carpool.ride.arrival_location }}</span>
+              <h4>{{ carpool.ride.arrival_location }}</h4>
           </div>
           <div class="ride-details-info">
               <img src="/assets/calendar.png" height="24" width="24"> <span class="ride-details-info-label">Date</span>
-              <strong><span>{{ carpool.ride.ride_date | date : "MMM d y - h:mm a" }}</span></strong>
+              <h4>{{ carpool.ride.ride_date | date : "MMM d y - h:mm a" }}</h4>
           </div>
           <div class="ride-details-comment">
               <div class="ride-notes">
                   <div class="ride-notes-photo"></div>
                   <div class="ride-notes-content">
-                      <strong><h3>Driver: {{ carpool.ride.user.name }}</h3></strong>
-                      <h4>{{ carpool.ride.notes }}</h4>
+                      <strong><h3>Driver: {{ carpool.ride.user.username }}</h3></strong>
+                      <h4>Trip Notes: {{ carpool.ride.notes }}</h4>
                   </div>
               </div>
           </div>
@@ -29,14 +29,14 @@
     <div class="col-md-4">
         <div class="ride-booking">
             <div class="ride-booking-seats">
-                <span class="text-muted pull-left">Price per seat</span>
-                <strong><span class="pull-right"></span>{{ carpool.ride.seat_price }}</strong>
+                <span class="text-muted pull-left">Price per seat </span>
+                <strong><span class="pull-right"></span> ${{ carpool.ride.seat_price }}</strong>
             </div>
-            <div class="ride-booking-occupancy">
+            <div class="ride-booking-occupancy" ng-if="carpool.ride.available_seats">
                 <span class="text-muted center-block">Seats left on this ride</span>
                 <strong><span>{{ carpool.ride.available_seats }}</span></strong>
             </div>
-            <div class="ride-booking-request">
+            <div class="ride-booking-request" ng-if="carpool.ride.available_seats">
                 <form method="POST">
                     <div class="form-group">
                         <span>Number of seats to book</span>
@@ -48,7 +48,7 @@
                     </div>
                 </form>
             </div>
-            <button class="btn btn-success" ng-click="newCarpool()">Request to Book</button>
+            <button class="btn btn-success" ng-click="carpool.newCarpool()">Request to Book</button>
         </div>
         <div ng-include src='partials/_driver_profile.html'></div>
     </div>

@@ -31,7 +31,12 @@
             .state('new_ride', {
                 url: '/rides/new',
                 controller: 'RideCreateCtrl as ride',
-                templateUrl: 'new_ride.html'
+                templateUrl: 'new_ride.html',
+                resolve: {
+                  auth: function($auth) {
+                    return $auth.validateUser();
+                  }
+                }
             })
             .state('edit_ride', {
                 url: '/rides/:id/edit',

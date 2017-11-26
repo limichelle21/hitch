@@ -4,7 +4,6 @@
 // to receive params from $state -- $state.params.obj
         var ride = this;
         ride.loading = true;
-
         Ride.search({date: $state.params.date, departure: $state.params.departure, arrival: $state.params.arrival},
             function(response) {
               console.log(this);
@@ -12,13 +11,10 @@
               ride.loading = false;
               console.log("rides response!");
             })
-
-
     // function for ng-click to book carpool state
-
         ride.newCarpool = function(ride) {
             console.log("ride to be passed", ride)
-            $state.go('book_ride', {ride: ride.ride})
+            $state.go('book_ride', {ride: ride})
         }
         return ride;
       };

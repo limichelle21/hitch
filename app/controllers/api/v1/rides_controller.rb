@@ -1,14 +1,14 @@
 class Api::V1::RidesController < ApiController
 
   respond_to :json
-  before_action :get_user, only: :new
+  before_action :authenticate_user!
+  before_action :get_user, only: [:new, :create]
 
 
 # return rides based on search params
 
 
   def index
-
     if params[:date] && params[:departure] && params[:arrival]
       # params[:date] = params[:date].to_date
       # @rides = Ride.filter(params.slice(:ride_date, :departure_location, :arrival_location))
@@ -71,7 +71,7 @@ class Api::V1::RidesController < ApiController
     end
 
     def search_params
-      params.permit(:ride_date, :departure_location, :arrival_location)
+        params.permit(:ride_date, :departure_location, :arrival_location)
     end
 
     def filtering_params(params)
@@ -80,7 +80,9 @@ class Api::V1::RidesController < ApiController
 
 
     def get_user
-        @user = current_user
+        # @user = current_api_user
+        puts "><><><><><><><><><><>>><<<#{current_user.inspect}"
+        # @user = User.find_by(auth_token: token)
     end
 
 end
